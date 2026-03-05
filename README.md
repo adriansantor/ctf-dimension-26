@@ -9,18 +9,26 @@
 - jose
 - lara
 - dani
+- hiba
+- gunji
 
 #### Retos
+
+##### Fácil
 - cesar decode
 - zip bomb
-- .py
 - rsa
 - buscar primer ataque masivo en internet
+- ASCII ampliar
+
+##### Medio
+- .py
 - minecraft
 - SQLi (medio)
 - NFC
-- ASCII ampliar
 - metadata foto
+
+##### Difícil
 - JWT
 - SQLi (dificil)
 - hash (john)
@@ -35,16 +43,22 @@
 - pedro³
 
 #### Retos
+
+##### Fácil
 - tu madre es tan gorda
 - b64 encode
-- grep
 - html
+
+##### Medio
+- grep
 - gymkana
 - papel CIC
-- Lockpicking
 - harry potter
 - morse
 - espectro audio
+
+##### Difícil
+- Lockpicking
 - Bruteforce login
 - Descompilar el binario
 - CSRF
@@ -56,21 +70,27 @@
 - sola
 - alejandro clase
 - belén
-- alavaro delegado
+- álvaro delegado
 
 #### Retos
+
+##### Fácil
 - twitter
-- dijsakjdtra
 - hexacolor
 - laberinto
 - creds default
 - comentarios discretos
-- coords gMaps
 - hex --> ascii
+- código cve
+
+##### Medio
+- dijsakjdtra
+- coords gMaps
 - multisim
 - parcial fundamentos de seguridad
+
+##### Difícil
 - wireshark
-- código cve
 - XSS
 
 ## Misc.
