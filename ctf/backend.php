@@ -72,6 +72,11 @@ final class CtfBackend
     public function saveName(string $nombre): void
     {
         $nombreB64 = $this->encodeName($nombre);
+
+        if (!$this->comprobarNombreExiste($nombreB64)) {
+            throw new RuntimeException('El usuario/equipo no existe.');
+        }
+
         $this->setUsuarioCookieValue($nombreB64);
     }
 
