@@ -83,7 +83,7 @@ $backendUrl = '/backend.php';
 
 		document.getElementById('flag-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
-			const flagValue = document.getElementById('flag-input').value.trim();
+			const flagValue = 'core{buscar_primer_ataque_masivo_en_internet}';
 
 			try {
 				const result = await postBackend({
@@ -92,6 +92,7 @@ $backendUrl = '/backend.php';
 					flag: flagValue,
 				});
 				if (result.correcta) {
+					//¿Hay que enviar la flag?
 					alert('¡Flag correcta! Puntos sumados.');
 				} else {
 					alert('Flag incorrecta');
