@@ -28,14 +28,14 @@ $backendUrl = '/backend.php';
 			<p>¿Cuál es el nombre del que se considera el primer ciber-ataque masivo en la historia de Internet?</p>
 			
 			<label for="answer-input">Tu respuesta:</label><br>
-			<input id="answer-input" type="text" placeholder="Ejemplo: SQ" autocomplete="off" />
+			<input id="answer-input" type="text" placeholder="Ejemplo:virus ..." autocomplete="off" />
 			<button onclick="comprobarRespuesta()">Comprobar</button>
 			
 			<div id="feedback" class="feedback"></div>
 		</section>
 
 		<section id="flag-section" style="display: none;">
-			<h2>¡Conseguido! Envia flag</h2>
+			<h2>¡Conseguido! Envia la flag</h2>
 			<form id="flag-form">
 				<label for="flag-input">Flag</label><br>
 				<input id="flag-input" name="flag" type="text" required autocomplete="off" style="width: 300px;" />
