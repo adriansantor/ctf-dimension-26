@@ -7,6 +7,12 @@ Este backend recibe peticiones desde los `index.php` de los retos y guarda el es
 - API: `ctf/backend.php`
 - DB: `ctf/retos.csv`
 
+Con despliegue en nginx, la ruta del backend va a ser:
+
+- `http://192.168.1.100/backend.php`
+
+Y los retos cuelgan de la misma origin (`/facil/*`, `/medio/*`, `/dificil/*`).
+
 ## Formato de petición
 
 `backend.php` acepta (d momento):
@@ -34,7 +40,7 @@ SIEMPRE responde JSON:
   - `existe` (`true|false`)
 
 ```js
-fetch('/ctf/backend.php', {
+fetch('/backend.php', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({
@@ -51,10 +57,9 @@ fetch('/ctf/backend.php', {
   - `nombre` (texto plano)
 - action:
   - Encodea el nombre en base64
-  - guarda cookie `usuario_b64`mbiar 127.0.0.1 si el cliente (navegador) está en otro equipo distinto al que co
-
+  - guarda cookie `usuario_b64`
 ```js
-fetch('/ctf/backend.php', {
+fetch('/backend.php', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({
@@ -73,7 +78,7 @@ fetch('/ctf/backend.php', {
   - `nombre` (texto plano)
 
 ```js
-fetch('/ctf/backend.php', {
+fetch('/backend.php', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({
@@ -92,7 +97,7 @@ fetch('/ctf/backend.php', {
   - `puntos` (int)
 
 ```js
-fetch('/ctf/backend.php', {
+fetch('/backend.php', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({
@@ -112,7 +117,7 @@ fetch('/ctf/backend.php', {
   - marca `1` en la columna del reto para ese equipo
 
 ```js
-fetch('/ctf/backend.php', {
+fetch('/backend.php', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({
@@ -133,7 +138,7 @@ fetch('/ctf/backend.php', {
   - `hecho` (`true|false`)
 
 ```js
-fetch('/ctf/backend.php', {
+fetch('/backend.php', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({
@@ -157,7 +162,7 @@ fetch('/ctf/backend.php', {
   - inicializa todos los retos a `0`
 
 ```js
-fetch('/ctf/backend.php', {
+fetch('/backend.php', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({
@@ -178,7 +183,7 @@ fetch('/ctf/backend.php', {
   - crea cookie `usuario_b64`
 
 ```js
-fetch('/ctf/backend.php', {
+fetch('/backend.php', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({
@@ -204,7 +209,7 @@ fetch('/ctf/backend.php', {
   - si es correcta y no estaba hecha, marca el reto y suma puntos
 
 ```js
-fetch('/ctf/backend.php', {
+fetch('/backend.php', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   credentials: 'include',

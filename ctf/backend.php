@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+const COOKIE_USUARIO_B64 = 'usuario_b64';
+
 applyCorsHeaders();
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
     http_response_code(204);
@@ -11,12 +13,24 @@ header('Content-Type: application/json; charset=utf-8');
 
 function applyCorsHeaders(): void
 {
-    $origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
-    header('Vary: Origin');
-    header('Access-Control-Allow-Origin: ' . $origin);
-    header('Access-Control-Allow-Credentials: true');
+    $origin = trim((string) ($_SERVER['HTTP_ORIGIN'] ?? ''));
+    if ($origin !== '') {
+        header('Vary: Origin');
+        header('Access-Control-Allow-Origin: ' . $origin);
+        header('Access-Control-Allow-Credentials: true');
+    }
+
     header('Access-Control-Allow-Methods: POST, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type');
+}
+
+function isHttpsRequest(): bool
+{
+    if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+        return true;
+    }
+
+    return (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
 }
 
 final class CtfBackend
@@ -50,10 +64,15 @@ final class CtfBackend
         return false;
     }
 
+    public function existeUsuario(string $nombre): bool
+    {
+        return $this->comprobarNombreExiste($nombre);
+    }
+
     public function saveName(string $nombre): void
     {
         $nombreB64 = $this->encodeName($nombre);
-        $this->setCookieValue('usuario_b64', $nombreB64);
+        $this->setUsuarioCookieValue($nombreB64);
     }
 
     public function getName(string $nombreB64): string
@@ -143,7 +162,7 @@ final class CtfBackend
             throw new RuntimeException('El equipo no existe.');
         }
 
-        $this->setCookieValue('usuario_b64', $nombreEquipoB64);
+        $this->setUsuarioCookieValue($nombreEquipoB64);
     }
 
     public function submitFlag(string $nombre, string $reto, string $flag): array
@@ -385,12 +404,12 @@ final class CtfBackend
         return base64_encode($decoded) === $value;
     }
 
-    private function setCookieValue(string $name, string $value): void
+    private function setUsuarioCookieValue(string $value): void
     {
-        setcookie($name, $value, [
+        setcookie(COOKIE_USUARIO_B64, $value, [
             'expires' => time() + 60 * 60 * 24 * 30,
             'path' => '/',
-            'secure' => false,
+            'secure' => isHttpsRequest(),
             'httponly' => true,
             'samesite' => 'Lax',
         ]);
@@ -467,7 +486,7 @@ function getNombreFromPayloadOrCookie(array $payload): string
         return $fromPayload;
     }
 
-    $fromCookie = (string) ($_COOKIE['usuario_b64'] ?? '');
+    $fromCookie = (string) ($_COOKIE[COOKIE_USUARIO_B64] ?? '');
     return $fromCookie;
 }
 
@@ -490,7 +509,11 @@ try {
     switch ($action) {
         case 'comprobar_nombre_existe':
             $nombre = (string) ($payload['nombre'] ?? '');
-            respond(200, ['ok' => true, 'existe' => $backend->comprobarNombreExiste($nombre)]);
+            respond(200, ['ok' => true, 'existe' => $backend->existeUsuario($nombre)]);
+
+        case 'existe_usuario':
+            $nombre = (string) ($payload['nombre'] ?? '');
+            respond(200, ['ok' => true, 'existe' => $backend->existeUsuario($nombre)]);
 
         case 'save_name':
             $nombre = (string) ($payload['nombre'] ?? '');

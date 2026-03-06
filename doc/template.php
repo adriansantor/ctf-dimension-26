@@ -2,8 +2,7 @@
 declare(strict_types=1);
 
 $challengeId = 'ID_RETO';
-// poner la IP/LAN del servidor (ej: http://192.168.1.50:8080/backend.php). cuando se monte la infra, revisaremos esto los jefes :P
-$backendUrl = 'http://127.0.0.1:8080/backend.php';
+$backendUrl = '/backend.php';
 ?>
 <!doctype html>
 <html lang="es">
