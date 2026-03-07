@@ -113,6 +113,14 @@ $retosPorDificultad = [
         <h1>Landing CTF</h1>
 
         <section>
+            <h2>Scoreboard</h2>
+            <p>visualiza los puntos en tiempo real</p>
+            <a href="/scoreboard.php">
+                <button type="button">Ver scoreboard</button>
+            </a>
+        </section>
+
+        <section>
             <h2>Introducir usuario</h2>
             <p>asigna cookie <code>usuario_b64</code></p>
             <form id="introducir-form">
