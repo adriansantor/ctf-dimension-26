@@ -128,6 +128,14 @@ $retosPorDificultad = [
             <form id="crear-form">
                 <label for="crear-usuario">Usuario</label>
                 <input id="crear-usuario" name="usuario" type="text" required autocomplete="off">
+
+                <label for="crear-dificultad">Dificultad</label>
+                <select id="crear-dificultad" name="dificultad" required>
+                    <option value="1">facil</option>
+                    <option value="2">medio</option>
+                    <option value="3">dificil</option>
+                </select>
+
                 <button type="submit">Crear usuario</button>
             </form>
         </section>
@@ -215,9 +223,15 @@ $retosPorDificultad = [
         document.getElementById('crear-form').addEventListener('submit', async (event) => {
             event.preventDefault();
             const username = document.getElementById('crear-usuario').value.trim();
+            const dificultadId = Number.parseInt(document.getElementById('crear-dificultad').value, 10);
 
             if (!username) {
                 setStatus('Introduce un usuario válido.', true);
+                return;
+            }
+
+            if (![1, 2, 3].includes(dificultadId)) {
+                setStatus('Selecciona una dificultad válida.', true);
                 return;
             }
 
@@ -225,7 +239,7 @@ $retosPorDificultad = [
                 await postBackend({
                     action: 'crear_equipo',
                     nombre: username,
-                    dificultad_id: 1,
+                    dificultad_id: dificultadId,
                 });
 
                 await postBackend({ action: 'save_name', nombre: username });

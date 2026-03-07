@@ -37,14 +37,16 @@ final class CtfBackend
 {
     private string $csvPath;
     private string $flagsPath;
+    private string $respuestasPath;
     private string $logsDir;
     private array $header = [];
     private array $challengeColumns = [];
 
-    public function __construct(string $csvPath, string $flagsPath, string $logsDir)
+    public function __construct(string $csvPath, string $flagsPath, string $respuestasPath, string $logsDir)
     {
         $this->csvPath = $csvPath;
         $this->flagsPath = $flagsPath;
+        $this->respuestasPath = $respuestasPath;
         $this->logsDir = $logsDir;
         $this->ensureLogsDir();
         $this->loadHeader();
@@ -136,6 +138,7 @@ final class CtfBackend
 
     public function crearEquipo(string $nombre, int $dificultadId): void
     {
+        $dificultadId = $this->normalizeDificultadId($dificultadId);
         $nombreB64 = $this->encodeName($nombre);
 
         if ($this->comprobarNombreExiste($nombreB64)) {
@@ -240,6 +243,46 @@ final class CtfBackend
         ];
     }
 
+    public function getFlag(string $idPrueba): string
+    {
+        $idPrueba = trim($idPrueba);
+        if ($idPrueba === '') {
+            throw new InvalidArgumentException('El id de la prueba no puede estar vacío.');
+        }
+
+        $flags = $this->loadFlags();
+        if (!isset($flags[$idPrueba])) {
+            throw new RuntimeException('No hay flag para la prueba indicada.');
+        }
+
+        $flag = (string) ($flags[$idPrueba]['flag'] ?? '');
+        if ($flag === '') {
+            throw new RuntimeException('Errorin');
+        }
+
+        return $flag;
+    }
+
+    public function comprobarRespuesta(string $idPrueba, string $texto): bool
+    {
+        $idPrueba = trim($idPrueba);
+        if ($idPrueba === '') {
+            throw new InvalidArgumentException('El id de la prueba no puede estar vacío.');
+        }
+
+        $respuestaEsperada = $this->loadRespuestas()[$idPrueba] ?? null;
+        if ($respuestaEsperada === null) {
+            throw new RuntimeException('No hay respuesta para la prueba indicada.');
+        }
+
+        $respuestaEsperada = trim($respuestaEsperada);
+        if ($respuestaEsperada === '') {
+            throw new RuntimeException('Errorin'); 
+        }
+
+        return stripos($texto, $respuestaEsperada) !== false;
+    }
+
     public function encodeName(string $nombre): string
     {
         return base64_encode(trim($nombre));
@@ -268,6 +311,15 @@ final class CtfBackend
             3 => 300,
             default => throw new InvalidArgumentException('dificultad_id debe ser 1 (fácil),2 (medio) o 3 (difícil).')
         };
+    }
+
+    private function normalizeDificultadId(int $dificultadId): int
+    {
+        if (!in_array($dificultadId, [1, 2, 3], true)) {
+            throw new InvalidArgumentException('dificultad_id debe ser 1 (facil), 2 (medio) o 3 (dificil).');
+        }
+
+        return $dificultadId;
     }
 
     private function normalizeChallengeColumn(string $reto): string
@@ -466,6 +518,39 @@ final class CtfBackend
 
         return $decoded;
     }
+
+    private function loadRespuestas(): array
+    {
+        if (!is_file($this->respuestasPath)) {
+            throw new RuntimeException('No existe el fichero de respuestas.');
+        }
+
+        $raw = file_get_contents($this->respuestasPath);
+        if ($raw === false || trim($raw) === '') {
+            throw new RuntimeException('El fichero de respuestas está vacío o no se puede leer.');
+        }
+
+        $decoded = json_decode($raw, true);
+        if (!is_array($decoded)) {
+            throw new RuntimeException('El fichero de respuestas no tiene un JSON válido.');
+        }
+
+        $respuestasById = [];
+        foreach ($decoded as $entry) {
+            if (!is_array($entry)) {
+                continue;
+            }
+
+            $id = trim((string) ($entry['id_reto'] ?? ''));
+            if ($id === '') {
+                continue;
+            }
+
+            $respuestasById[$id] = (string) ($entry['respuesta'] ?? '');
+        }
+
+        return $respuestasById;
+    }
 }
 
 function requestPayload(): array
@@ -505,6 +590,7 @@ function respond(int $status, array $payload): void
 $backend = new CtfBackend(
     __DIR__ . '/retos.csv',
     __DIR__ . '/private/flags.json',
+    __DIR__ . '/private/respuestas.json',
     __DIR__ . '/logs'
 );
 $payload = requestPayload();
@@ -590,6 +676,29 @@ try {
                 'correcta' => $result['correcta'],
                 'ya_hecha' => $result['ya_hecha'],
                 'puntos_sumados' => $result['puntos_sumados'],
+            ]);
+
+        case 'get_flag':
+            $idPrueba = (string) ($payload['id'] ?? ($payload['reto'] ?? ''));
+            if ($idPrueba === '') {
+                throw new InvalidArgumentException('Falta id o reto.');
+            }
+
+            respond(200, [
+                'ok' => true,
+                'flag' => $backend->getFlag($idPrueba),
+            ]);
+
+        case 'comprobar_respuesta':
+            $idPrueba = (string) ($payload['id'] ?? ($payload['reto'] ?? ''));
+            $respuesta = (string) ($payload['respuesta'] ?? '');
+            if ($idPrueba === '') {
+                throw new InvalidArgumentException('Falta id o reto.');
+            }
+
+            respond(200, [
+                'ok' => true,
+                'correcta' => $backend->comprobarRespuesta($idPrueba, $respuesta),
             ]);
 
         default:
