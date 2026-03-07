@@ -17,7 +17,7 @@ function difficultyLabel(int $difficultyId): string
         1 => 'facil',
         2 => 'medio',
         3 => 'dificil',
-        default => 'desconocida',
+        default => 'unknown',
     };
 }
 
@@ -207,7 +207,7 @@ if (isset($_GET['data'])) {
 <body>
     <main>
         <h1>Scoreboard</h1>
-        <p class="meta">Datos en tiempo real desde <code>retos.csv</code>. Refresco automatico cada 5s.</p>
+        <p class="meta">Datos desde <code>retos.csv</code>.</p>
 
         <section class="card">
             <h2>Grafico de puntos</h2>
