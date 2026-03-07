@@ -1,0 +1,162 @@
+[
+  {
+    "id_reto": "cesar_decode",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "zip_bomb",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "rsa",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "buscar_primer_ataque_masivo_en_internet",
+    "respuesta": "Gusano de morris"
+  },
+  {
+    "id_reto": "ascii_ampliar",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "tu_madre_es_tan_gorda",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "b64_encode",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "html",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "twitter",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "hexacolor",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "laberinto",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "creds_default",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "comentarios_discretos",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "hex_ascii",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "codigo_cve",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "py",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "minecraft",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "sqli_medio",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "nfc",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "metadata_foto",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "grep",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "gymkana",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "papel_cic",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "harry_potter",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "morse",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "espectro_audio",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "dijsakjdtra",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "coords_gmaps",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "multisim",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "parcial_fundamentos_de_seguridad",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "jwt",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "sqli_dificil",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "hash_john",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "get_con_cabecera",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "lockpicking",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "bruteforce_login",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "descompilar_el_binario",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "csrf",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "wireshark",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "xss",
+    "respuesta": "PLACEHOLDER"
+  }
+]

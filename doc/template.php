@@ -13,11 +13,18 @@ $backendUrl = '/backend.php';
 </head>
 <body>
 	<main>
-		<h1>Enviar flag</h1>
+		<h1>Responder pregunta</h1>
+		<form id="respuesta-form">
+			<label for="respuesta-input">Pregunta</label>
+			<input id="respuesta-input" name="respuesta" type="text" required autocomplete="off" />
+			<button type="submit">Submit</button>
+		</form>
+
+		<h2>Enviar flag</h2>
 		<form id="flag-form">
 			<label for="flag-input">Flag</label>
 			<input id="flag-input" name="flag" type="text" required autocomplete="off" />
-			<button type="submit">Submit</button>
+			<button type="submit">Comprobar flag</button>
 		</form>
 	</main>
 
@@ -51,6 +58,21 @@ $backendUrl = '/backend.php';
 			await postBackend({ action: 'get_puntos' });
 		}
 
+		async function comprobarRespuesta(respuestaValue) {
+			return postBackend({
+				action: 'comprobar_respuesta',
+				id: CHALLENGE_ID,
+				respuesta: respuestaValue,
+			});
+		}
+
+		async function getFlag() {
+			return postBackend({
+				action: 'get_flag',
+				id: CHALLENGE_ID,
+			});
+		}
+
 		async function submitFlag(flagValue) {
 			return postBackend({
 				action: 'submit_flag',
@@ -58,6 +80,38 @@ $backendUrl = '/backend.php';
 				flag: flagValue,
 			});
 		}
+
+		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
+			event.preventDefault();
+
+			const input = document.getElementById('respuesta-input');
+			const respuestaValue = input.value.trim();
+
+			if (!respuestaValue) {
+				alert('Introduce una respuesta.');
+				return;
+			}
+
+			try {
+				await validarCookieUsuario();
+			} catch (error) {
+				alert('cookien\'t');
+				return;
+			}
+
+			try {
+				const result = await comprobarRespuesta(respuestaValue);
+				if (result.correcta) {
+					const flagResult = await getFlag();
+					alert('Flag: ' + flagResult.flag);
+					return;
+				}
+
+				alert('Respuesta incorrecta');
+			} catch (error) {
+				alert('Respuesta incorrecta');
+			}
+		});
 
 		document.getElementById('flag-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
