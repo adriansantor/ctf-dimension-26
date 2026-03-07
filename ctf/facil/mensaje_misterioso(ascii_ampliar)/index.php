@@ -9,7 +9,7 @@ $backendUrl = '/backend.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mensaje misterioso</title>
+    <title>Template Reto CTF</title>
 </head>
 <body>
 <main>
@@ -18,17 +18,25 @@ $backendUrl = '/backend.php';
         Hemos recibido el siguiente mensaje. Sospechamos que contiene la flag para este desafio, pero no sabemos cuál es. Nos ayudas a descubrirlo?
     </p>
     <p style="font-family: monospace; white-space: pre-wrap; font-size: 40px">
-                              __             _ _                          _ _          __
-          ___ ___  _ __ ___  / /_ _ ___  ___(_|_)    __ _ _ __ ___  _ __ | (_) __ _ _ _\ \
-         / __/ _ \| '__/ _ \| / _` / __|/ __| | |   / _` | '_ ` _ \| '_ \| | |/ _` | '__| |
-        | (_| (_) | | |  __< < (_| \__ \ (__| | |  | (_| | | | | | | |_) | | | (_| | |   > >
-         \___\___/|_|  \___|| \__,_|___/\___|_|_|___\__,_|_| |_| |_| .__/|_|_|\__,_|_|  | |
-                             \_\               |_____|             |_|                 /_/
+         _   _            _                      _ _                                    _
+        | | | |_ __   ___| |_ ___    __ _    ___(_) |__   ___ _ __    ___ ___  _ __ ___| |
+        | | | | '_ \ / _ \ __/ _ \  / _` |  / __| | '_ \ / _ \ '__|  / __/ _ \| '__/ _ \ |
+        | |_| | | | |  __/ ||  __/ | (_| | | (__| | |_) |  __/ |    | (_| (_) | | |  __/_|
+         \___/|_| |_|\___|\__\___|  \__,_|  \___|_|_.__/ \___|_|     \___\___/|_|  \___(_)
     </p>
+
+    <h1>Responder pregunta</h1>
+    <form id="respuesta-form">
+        <label for="respuesta-input">Cuál es el contenido del mensaje misterioso?</label>
+        <input id="respuesta-input" name="respuesta" type="text" required autocomplete="off" />
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Enviar flag</h2>
     <form id="flag-form">
         <label for="flag-input">Flag</label>
         <input id="flag-input" name="flag" type="text" required autocomplete="off" />
-        <button type="submit">Submit</button>
+        <button type="submit">Comprobar flag</button>
     </form>
 </main>
 
@@ -62,6 +70,21 @@ $backendUrl = '/backend.php';
         await postBackend({ action: 'get_puntos' });
     }
 
+    async function comprobarRespuesta(respuestaValue) {
+        return postBackend({
+            action: 'comprobar_respuesta',
+            id: CHALLENGE_ID,
+            respuesta: respuestaValue,
+        });
+    }
+
+    async function getFlag() {
+        return postBackend({
+            action: 'get_flag',
+            id: CHALLENGE_ID,
+        });
+    }
+
     async function submitFlag(flagValue) {
         return postBackend({
             action: 'submit_flag',
@@ -69,6 +92,38 @@ $backendUrl = '/backend.php';
             flag: flagValue,
         });
     }
+
+    document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const input = document.getElementById('respuesta-input');
+        const respuestaValue = input.value.trim();
+
+        if (!respuestaValue) {
+            alert('Introduce una respuesta.');
+            return;
+        }
+
+        try {
+            await validarCookieUsuario();
+        } catch (error) {
+            alert('cookien\'t');
+            return;
+        }
+
+        try {
+            const result = await comprobarRespuesta(respuestaValue);
+            if (result.correcta) {
+                const flagResult = await getFlag();
+                alert('Respuesta correcta! Flag: ' + flagResult.flag);
+                return;
+            }
+
+            alert('Respuesta incorrecta. Prueba otra vez');
+        } catch (error) {
+            alert('Respuesta incorrecta. Prueba otra vez');
+        }
+    });
 
     document.getElementById('flag-form').addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -90,14 +145,18 @@ $backendUrl = '/backend.php';
 
         try {
             const result = await submitFlag(flagValue);
+            if (result.ya_hecha){
+                alert('Ya has conseguido esta flag, no se añadiran puntos');
+                return;
+            }
             if (result.correcta) {
-                alert('Flag correcta. Ctrl -!');
+                alert('Flag correcta! +' + result.puntos_sumados + ' puntos conseguidos');
                 return;
             }
 
-            alert('Flag incorrecta, prueba otra vez');
+            alert('Flag incorrecta');
         } catch (error) {
-            alert('Flag incorrecta, prueba otra vez');
+            alert('Flag incorrecta');
         }
     });
 </script>
