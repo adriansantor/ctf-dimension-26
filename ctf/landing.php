@@ -27,8 +27,66 @@ function listChallengeSlugs(string $directory): array
     return $slugs;
 }
 
+function loadUserChallengeState(string $csvPath, string $nombreB64): array
+{
+    if ($nombreB64 === '' || !is_file($csvPath)) {
+        return [];
+    }
+
+    $handle = fopen($csvPath, 'rb');
+    if ($handle === false) {
+        return [];
+    }
+
+    if (!flock($handle, LOCK_SH)) {
+        fclose($handle);
+        return [];
+    }
+
+    $header = fgetcsv($handle);
+    if (!is_array($header) || $header === []) {
+        flock($handle, LOCK_UN);
+        fclose($handle);
+        return [];
+    }
+
+    $idxNombre = array_search('nombre_b64', $header, true);
+    if ($idxNombre === false) {
+        flock($handle, LOCK_UN);
+        fclose($handle);
+        return [];
+    }
+
+    $state = [];
+    while (($row = fgetcsv($handle)) !== false) {
+        if (!is_array($row) || $row === [] || $row === [null]) {
+            continue;
+        }
+
+        if ((string) ($row[$idxNombre] ?? '') !== $nombreB64) {
+            continue;
+        }
+
+        foreach ($header as $index => $column) {
+            if (!is_string($column) || $column === '' || in_array($column, ['nombre_b64', 'dif', 'puntos'], true)) {
+                continue;
+            }
+
+            $state[$column] = (string) ($row[$index] ?? '0');
+        }
+
+        break;
+    }
+
+    flock($handle, LOCK_UN);
+    fclose($handle);
+
+    return $state;
+}
+
 $usuarioCookie = (string) ($_COOKIE['usuario_b64'] ?? '');
 $tieneUsuario = $usuarioCookie !== '';
+$estadoRetosUsuario = loadUserChallengeState(__DIR__ . '/retos.csv', $usuarioCookie);
 
 $retosPorDificultad = [
     'Fácil' => [
@@ -100,11 +158,36 @@ $retosPorDificultad = [
 
         .retos-grid ul {
             margin: 0;
-            padding-left: 1.2rem;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .retos-grid li {
-            margin: 0.25rem 0;
+            margin: 0;
+        }
+
+        .challenge-link {
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.45rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid #1d4f8f;
+            color: #16365e;
+            background: #eef5ff;
+        }
+
+        .challenge-link:hover {
+            background: #ddeaff;
+        }
+
+        .challenge-link.is-done {
+            background: #2f9e44;
+            border-color: #2b8a3e;
+            color: #fff;
         }
     </style>
 </head>
@@ -162,8 +245,15 @@ $retosPorDificultad = [
                         <?php else: ?>
                             <ul>
                                 <?php foreach ($config['slugs'] as $slug): ?>
+                                    <?php
+                                        $retoKey = $slug;
+                                        if (!array_key_exists($retoKey, $estadoRetosUsuario)) {
+                                            $retoKey = preg_replace('/\s*\(.*\)$/', '', $slug) ?? $slug;
+                                        }
+                                        $retoHecho = ($estadoRetosUsuario[$retoKey] ?? '0') === '1';
+                                    ?>
                                     <li>
-                                        <a href="<?php echo htmlspecialchars($config['basePath'] . '/' . $slug, ENT_QUOTES, 'UTF-8'); ?>">
+                                        <a class="challenge-link<?php echo $retoHecho ? ' is-done' : ''; ?>" href="<?php echo htmlspecialchars($config['basePath'] . '/' . $slug, ENT_QUOTES, 'UTF-8'); ?>">
                                             <?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>
                                         </a>
                                     </li>
