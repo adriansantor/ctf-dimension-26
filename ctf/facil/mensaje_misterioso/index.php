@@ -9,7 +9,7 @@ $backendUrl = '/backend.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Template Reto CTF</title>
+    <title>Mensaje misterioso</title>
 </head>
 <body>
 <main>
@@ -17,13 +17,15 @@ $backendUrl = '/backend.php';
     <p style="font-size: 20px">
         Hemos recibido el siguiente mensaje. Sospechamos que contiene la flag para este desafio, pero no sabemos cuál es. Nos ayudas a descubrirlo?
     </p>
-    <p style="font-family: monospace; white-space: pre-wrap; font-size: 40px">
-         _   _            _                      _ _                                    _
-        | | | |_ __   ___| |_ ___    __ _    ___(_) |__   ___ _ __    ___ ___  _ __ ___| |
-        | | | | '_ \ / _ \ __/ _ \  / _` |  / __| | '_ \ / _ \ '__|  / __/ _ \| '__/ _ \ |
-        | |_| | | | |  __/ ||  __/ | (_| | | (__| | |_) |  __/ |    | (_| (_) | | |  __/_|
-         \___/|_| |_|\___|\__\___|  \__,_|  \___|_|_.__/ \___|_|     \___\___/|_|  \___(_)
-    </p>
+    <div style="width: 60%; margin: 0 auto;">
+        <p style="font-family: monospace; white-space: pre-wrap; font-size: 300%">
+            _   _            _                      _ _                                    _
+            | | | |_ __   ___| |_ ___    __ _    ___(_) |__   ___ _ __    ___ ___  _ __ ___| |
+            | | | | '_ \ / _ \ __/ _ \  / _` |  / __| | '_ \ / _ \ '__|  / __/ _ \| '__/ _ \ |
+            | |_| | | | |  __/ ||  __/ | (_| | | (__| | |_) |  __/ |    | (_| (_) | | |  __/_|
+            \___/|_| |_|\___|\__\___|  \__,_|  \___|_|_.__/ \___|_|     \___\___/|_|  \___(_)
+        </p>
+    </div>
 
     <h1>Responder pregunta</h1>
     <form id="respuesta-form">
