@@ -3,7 +3,7 @@
   "zip_bomb": {"dificultad_id": 1, "flag": "core{zip_bomb}"},
   "rsa": {"dificultad_id": 1, "flag": "core{rsa}"},
   "buscar_primer_ataque_masivo_en_internet": {"dificultad_id": 1, "flag": "core{buscar_primer_ataque_masivo_en_internet}"},
-  "ascii_ampliar": {"dificultad_id": 1, "flag": "core{ascii_ampliar}"},
+  "mensaje_misterioso": {"dificultad_id": 1, "flag": "core{mensaje_misterioso}"},
   "tu_madre_es_tan_gorda": {"dificultad_id": 1, "flag": "core{tu_madre_es_tan_gorda}"},
   "b64_encode": {"dificultad_id": 1, "flag": "core{b64_encode}"},
   "html": {"dificultad_id": 1, "flag": "core{html}"},

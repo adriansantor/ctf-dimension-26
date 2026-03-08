@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-$challengeId = 'ascii_ampliar';
+$challengeId = 'mensaje_misterioso';
 $backendUrl = '/backend.php';
 ?>
 <!doctype html>
