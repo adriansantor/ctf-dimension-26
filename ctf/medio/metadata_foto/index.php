@@ -15,7 +15,6 @@ $backendUrl = '/backend.php';
 		section { border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; }
 		input, button { padding: 0.5rem; margin-top: 0.5rem; cursor: pointer; }
 		.feedback { margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; }
-		#seccion-flag { display: none; background-color: #f9fff9; border-color: #4caf50; }
 	</style>
 </head>
 <body>
@@ -24,8 +23,7 @@ $backendUrl = '/backend.php';
 		<h3>Para conseguir la flag de este reto tienes que tirar de Fundamentos de Seguridad.</h3>
 
 		<section>
-			<h2>Pregunta</h2>
-			<p>¿Cuál es la palabra escondida en la metadata de esta imagen?</p>
+			<h2>Encuentra la flag en la metadata de la imagen</h2>
 			
 			<div style="text-align: center; margin-bottom: 1rem;">
 				<img src="/medio/metadata_foto/actually.jpg" alt="Imagen sospechosa" style="max-width: 100%; max-height: 200px; width: auto; border: 1px solid #ccc;">
@@ -35,22 +33,11 @@ $backendUrl = '/backend.php';
 				</a>
 			</div>
 
-			<div id="feedback-respuesta" class="feedback"></div>
-
-			<form id="respuesta-form">
-				<label for="respuesta-input">Respuesta:</label><br>
-				<input id="respuesta-input" name="respuesta" type="text" required autocomplete="off"/>
-				<button type="submit">Comprobar</button>
-			</form>
-		</section>
-
-		<section id="seccion-flag">
-			<h2>¡Conseguido, introduce la flag para sumar los puntos!</h2>
-			<p id="mensaje-exito" style="color: green; font-weight: bold;"></p>
+			<div id="feedback-flag" class="feedback"></div>
 			<form id="flag-form">
 				<label for="flag-input">Flag:</label><br>
 				<input id="flag-input" name="flag" type="text" required autocomplete="off" style="width: 300px;"/>
-				<button type="submit">Enviar flag real</button>
+				<button type="submit">Enviar flag</button>
 			</form>
 		</section>
 	</main>
@@ -73,61 +60,36 @@ $backendUrl = '/backend.php';
 		}
 
 		async function validarCookieUsuario() { await postBackend({ action: 'get_puntos' }); }
-		async function comprobarRespuesta(respuestaValue) { return postBackend({ action: 'comprobar_respuesta', id: CHALLENGE_ID, respuesta: respuestaValue }); }
-		async function getFlag() { return postBackend({ action: 'get_flag', id: CHALLENGE_ID }); }
 		async function submitFlag(flagValue) { return postBackend({ action: 'submit_flag', reto: CHALLENGE_ID, flag: flagValue }); }
-
-		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
-			event.preventDefault();
-			
-			const respuestaValue = document.getElementById('respuesta-input').value.trim();
-			const feedback = document.getElementById('feedback-respuesta');
-			
-			if (!respuestaValue) return;
-
-			try { await validarCookieUsuario(); } catch (error) { feedback.innerText = 'Error de sesión.'; feedback.style.color = 'red'; return; }
-
-			try {
-				const result = await comprobarRespuesta(respuestaValue);
-				if (result.correcta) {
-					const flagResult = await getFlag();
-					
-					feedback.innerText = '¡Has acertado!';
-					feedback.style.color = 'green';
-					
-					document.getElementById('seccion-flag').style.display = 'block';
-					
-					document.getElementById('flag-input').value = flagResult.flag;
-					
-					document.querySelector('#respuesta-form button').disabled = true;
-					return;
-				}
-				feedback.innerText = 'Respuesta incorrecta.';
-				feedback.style.color = 'red';
-			} catch (error) {
-				feedback.innerText = 'Respuesta incorrecta.';
-				feedback.style.color = 'red';
-			}
-		});
 
 		document.getElementById('flag-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
 			
 			const flagValue = document.getElementById('flag-input').value.trim();
+			const feedback = document.getElementById('feedback-flag');
 			if (!flagValue) return;
 
-			try { await validarCookieUsuario(); } catch (error) { alert('Error de sesión.'); return; }
+			try {
+				await validarCookieUsuario();
+			} catch (error) {
+				feedback.innerText = 'Error de sesión.';
+				feedback.style.color = 'red';
+				return;
+			}
 
 			try {
 				const result = await submitFlag(flagValue);
 				if (result.correcta) {
-					alert('¡Hackeo completado! Puntos sumados a tu equipo.');
+					feedback.innerText = '¡Hackeo completado! Puntos sumados a tu equipo.';
+					feedback.style.color = 'green';
 					document.querySelector('#flag-form button').disabled = true;
 					return;
 				}
-				alert('Flag incorrecta.');
+				feedback.innerText = 'Flag incorrecta.';
+				feedback.style.color = 'red';
 			} catch (error) {
-				alert('Flag incorrecta o ya has resuelto este reto.');
+				feedback.innerText = 'Flag incorrecta o ya has resuelto este reto.';
+				feedback.style.color = 'red';
 			}
 		});
 	</script>
