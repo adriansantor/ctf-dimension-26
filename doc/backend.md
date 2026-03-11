@@ -22,6 +22,35 @@ Y los retos cuelgan de la misma origin (`/facil/*`, `/medio/*`, `/dificil/*`).
 
 SIEMPRE SIEMPRE SIEMPRE se debe enviar el campo `action`.
 
+## Sesión y CSRF
+
+- `backend.php` abre sesión PHP y exige token CSRF en todos los `POST`.
+- El token se genera en páginas PHP como `landing.php` y los retos usando `ctf/csrf.php`.
+- El frontend debe enviar SIEMPRE:
+  - cookie de sesión (`credentials: 'include'`)
+  - header `X-CSRF-Token`
+- Un `POST` sin token válido responde `403` con `{"ok": false, "error": "CSRF token inválido."}`.
+
+Ejemplo mínimo desde una página PHP:
+
+```php
+require __DIR__ . '/../ctf/csrf.php';
+
+$csrfToken = getCtfCsrfToken();
+```
+
+```js
+fetch('/backend.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
+  body: JSON.stringify({ action: 'get_puntos' })
+});
+```
+
 ## Respuesta
 
 SIEMPRE responde JSON:
@@ -42,7 +71,11 @@ SIEMPRE responde JSON:
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'comprobar_nombre_existe',
     nombre: btoa('team')
@@ -61,7 +94,11 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'save_name',
     nombre: 'team'
@@ -80,7 +117,11 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'get_name',
     nombre_b64: btoa('team')
@@ -99,7 +140,11 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'get_puntos',
     nombre_b64: btoa('team')
@@ -119,7 +164,11 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'marcar_hecho',
     nombre_b64: btoa('team'),
@@ -140,7 +189,11 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'comprobar_hecho',
     nombre_b64: btoa('team'),
@@ -164,7 +217,11 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'crear_equipo',
     nombre: 'team',
@@ -185,7 +242,11 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'anadir_a_equipo',
     nombre_b64: btoa('team')
@@ -211,7 +272,10 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
   credentials: 'include',
   body: JSON.stringify({
     action: 'submit_flag',
@@ -236,7 +300,11 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'get_flag',
     id: 'jwt'
@@ -261,7 +329,11 @@ fetch('/backend.php', {
 ```js
 fetch('/backend.php', {
   method: 'POST',
-  headers: {'Content-Type': 'application/json'},
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': CSRF_TOKEN,
+  },
+  credentials: 'include',
   body: JSON.stringify({
     action: 'comprobar_respuesta',
     id: 'html',

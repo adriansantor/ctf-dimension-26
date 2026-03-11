@@ -37,7 +37,7 @@ function loadScoreRows(string $csvPath): array
         return [];
     }
 
-    $header = fgetcsv($handle);
+    $header = fgetcsv($handle, 0, ',', '"', '');
     if (!is_array($header)) {
         flock($handle, LOCK_UN);
         fclose($handle);
@@ -54,7 +54,7 @@ function loadScoreRows(string $csvPath): array
     }
 
     $rows = [];
-    while (($data = fgetcsv($handle)) !== false) {
+    while (($data = fgetcsv($handle, 0, ',', '"', '')) !== false) {
         if (!is_array($data) || $data === [] || $data === [null]) {
             continue;
         }

@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+require __DIR__ . '/csrf.php';
+
+$csrfToken = getCtfCsrfToken();
+
 function listChallengeSlugs(string $directory): array
 {
     if (!is_dir($directory)) {
@@ -43,7 +47,7 @@ function loadUserChallengeState(string $csvPath, string $nombreB64): array
         return [];
     }
 
-    $header = fgetcsv($handle);
+    $header = fgetcsv($handle, 0, ',', '"', '');
     if (!is_array($header) || $header === []) {
         flock($handle, LOCK_UN);
         fclose($handle);
@@ -58,7 +62,7 @@ function loadUserChallengeState(string $csvPath, string $nombreB64): array
     }
 
     $state = [];
-    while (($row = fgetcsv($handle)) !== false) {
+    while (($row = fgetcsv($handle, 0, ',', '"', '')) !== false) {
         if (!is_array($row) || $row === [] || $row === [null]) {
             continue;
         }
@@ -271,11 +275,15 @@ $retosPorDificultad = [
 
     <script>
         const BACKEND_URL = '/backend.php';
+        const CSRF_TOKEN = <?php echo json_encode($csrfToken, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
 
         async function postBackend(payload) {
             const response = await fetch(BACKEND_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': CSRF_TOKEN,
+                },
                 credentials: 'include',
                 body: JSON.stringify(payload),
             });

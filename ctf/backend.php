@@ -1,12 +1,19 @@
 <?php
 declare(strict_types=1);
 
+require __DIR__ . '/csrf.php';
+
 const COOKIE_USUARIO_B64 = 'usuario_b64';
 
+startCtfSession();
 applyCorsHeaders();
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
     http_response_code(204);
     exit;
+}
+
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !validateCtfCsrfToken()) {
+    respond(403, ['ok' => false, 'error' => 'CSRF token inválido.']);
 }
 
 header('Content-Type: application/json; charset=utf-8');
@@ -21,7 +28,7 @@ function applyCorsHeaders(): void
     }
 
     header('Access-Control-Allow-Methods: POST, OPTIONS');
-    header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Allow-Headers: Content-Type, X-CSRF-Token');
 }
 
 function isHttpsRequest(): bool
@@ -381,7 +388,7 @@ final class CtfBackend
             throw new RuntimeException('No se pudo bloquear el CSV para lectura.');
         }
 
-        $header = fgetcsv($handle);
+        $header = fgetcsv($handle, 0, ',', '"', '');
         if ($header === false) {
             flock($handle, LOCK_UN);
             fclose($handle);
@@ -389,7 +396,7 @@ final class CtfBackend
         }
 
         $rows = [];
-        while (($data = fgetcsv($handle)) !== false) {
+        while (($data = fgetcsv($handle, 0, ',', '"', '')) !== false) {
             if ($data === [null] || $data === []) {
                 continue;
             }
@@ -422,13 +429,13 @@ final class CtfBackend
         ftruncate($handle, 0);
         rewind($handle);
 
-        fputcsv($handle, $header);
+        fputcsv($handle, $header, ',', '"', '');
         foreach ($rows as $row) {
             $line = [];
             foreach ($header as $column) {
                 $line[] = $row[$column] ?? '';
             }
-            fputcsv($handle, $line);
+            fputcsv($handle, $line, ',', '"', '');
         }
 
         fflush($handle);

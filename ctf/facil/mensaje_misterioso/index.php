@@ -1,8 +1,11 @@
 <?php
 declare(strict_types=1);
 
+require __DIR__ . '/../../csrf.php';
+
 $challengeId = 'mensaje_misterioso';
 $backendUrl = '/backend.php';
+$csrfToken = getCtfCsrfToken();
 ?>
 <!doctype html>
 <html lang="es">
@@ -45,11 +48,15 @@ $backendUrl = '/backend.php';
 <script>
     const BACKEND_URL = <?php echo json_encode($backendUrl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
     const CHALLENGE_ID = <?php echo json_encode($challengeId, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
+    const CSRF_TOKEN = <?php echo json_encode($csrfToken, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
 
     async function postBackend(payload) {
         const response = await fetch(BACKEND_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': CSRF_TOKEN,
+            },
             credentials: 'include',
             body: JSON.stringify(payload),
         });
