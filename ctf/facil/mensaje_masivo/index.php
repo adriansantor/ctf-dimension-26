@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
-$challengeId = 'mensaje_misterioso';
+$challengeId = 'mensaje_masivo';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 ?>

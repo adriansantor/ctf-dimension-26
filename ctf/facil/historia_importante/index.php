@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
-$challengeId = 'buscar_primer_ataque_masivo_en_internet';
+$challengeId = 'historia_importante';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 ?>

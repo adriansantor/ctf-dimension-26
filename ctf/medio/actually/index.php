@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
-$challengeId = 'metadata_foto';
+$challengeId = 'actually';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 ?>
@@ -29,9 +29,9 @@ $csrfToken = getCtfCsrfToken();
 			<h2>Encuentra la flag en la metadata de la imagen</h2>
 			
 			<div style="text-align: center; margin-bottom: 1rem;">
-				<img src="/medio/metadata_foto/actually.jpg" alt="Imagen sospechosa" style="max-width: 100%; max-height: 200px; width: auto; border: 1px solid #ccc;">
+				<img src="/medio/actually/actually.jpg" alt="Imagen sospechosa" style="max-width: 100%; max-height: 200px; width: auto; border: 1px solid #ccc;">
 				<br>
-				<a href="/medio/metadata_foto/actually.jpg" download>
+				<a href="/medio/actually/actually.jpg" download>
 					<button type="button" style="margin-top: 10px;">Descargar imagen</button>
 				</a>
 			</div>

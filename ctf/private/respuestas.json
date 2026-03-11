@@ -1,6 +1,6 @@
 [
   {
-    "id_reto": "cesar_decode",
+    "id_reto": "mensaje_cifrado",
     "respuesta": "PLACEHOLDER"
   },
   {
@@ -8,15 +8,15 @@
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "rsa",
+    "id_reto": "claves_confusas",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "buscar_primer_ataque_masivo_en_internet",
+    "id_reto": "historia_importante",
     "respuesta": "morris"
   },
   {
-    "id_reto": "mensaje_misterioso",
+    "id_reto": "mensaje_masivo",
     "respuesta": "unete a ciber core"
   },
   {
@@ -24,27 +24,27 @@
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "b64_encode",
+    "id_reto": "torre_de_babel",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "html",
+    "id_reto": "plain",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "twitter",
+    "id_reto": "pajarito",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "hexacolor",
+    "id_reto": "colorido",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "laberinto",
+    "id_reto": "epstein_files",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "creds_default",
+    "id_reto": "rootoor",
     "respuesta": "PLACEHOLDER"
   },
   {
@@ -52,19 +52,19 @@
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "hex_ascii",
+    "id_reto": "mucho_texto",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "codigo_cve",
+    "id_reto": "cvque",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "py",
+    "id_reto": "serpiente",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "minecraft",
+    "id_reto": "mundo_misterioso",
     "respuesta": "PLACEHOLDER"
   },
   {
@@ -72,35 +72,35 @@
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "nfc",
+    "id_reto": "tarjeta_blanca",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "metadata_foto",
+    "id_reto": "actually",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "grep",
+    "id_reto": "regex",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "gymkana",
+    "id_reto": "exploracion",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "papel_cic",
+    "id_reto": "alta_torre",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "harry_potter",
+    "id_reto": "varita",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "morse",
+    "id_reto": "morsa",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "espectro_audio",
+    "id_reto": "fantasma",
     "respuesta": "PLACEHOLDER"
   },
   {
@@ -108,19 +108,19 @@
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "coords_gmaps",
+    "id_reto": "tesoro",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "multisim",
+    "id_reto": "odio_multisim",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "parcial_fundamentos_de_seguridad",
+    "id_reto": "metelo_en_arroz",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "jwt",
+    "id_reto": "telescopio",
     "respuesta": "PLACEHOLDER"
   },
   {
@@ -128,11 +128,11 @@
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "hash_john",
+    "id_reto": "sopadeletras",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "get_con_cabecera",
+    "id_reto": "cabezon",
     "respuesta": "PLACEHOLDER"
   },
   {
@@ -140,19 +140,19 @@
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "bruteforce_login",
+    "id_reto": "fuerte_ataque",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "descompilar_el_binario",
+    "id_reto": "juego_imposible",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "csrf",
+    "id_reto": "parametro_extraño",
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "wireshark",
+    "id_reto": "tiburon_en_el_agua",
     "respuesta": "PLACEHOLDER"
   },
   {
