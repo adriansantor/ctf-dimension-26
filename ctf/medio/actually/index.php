@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
+// ¡Usamos 'actually' para TODO!
 $challengeId = 'actually';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
@@ -18,15 +19,17 @@ $csrfToken = getCtfCsrfToken();
 		section { border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; }
 		input, button { padding: 0.5rem; margin-top: 0.5rem; cursor: pointer; }
 		.feedback { margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; }
+		#seccion-flag { display: none; background-color: #f9fff9; border-color: #4caf50; }
 	</style>
 </head>
 <body>
 	<main>
 		<h1>Búsqueda: Encontrar la metadata en la foto</h1>
-		<h3>Para conseguir la flag de este reto tienes que tirar de Fundamentos de Seguridad.</h3>
+		<p>Para conseguir la flag de este reto tienes que tirar de Fundamentos de Seguridad.</p>
 
 		<section>
-			<h2>Encuentra la flag en la metadata de la imagen</h2>
+			<h2>Pregunta</h2>
+			<p>¿Cuál es la palabra escondida en la metadata de esta imagen?</p>
 			
 			<div style="text-align: center; margin-bottom: 1rem;">
 				<img src="/medio/actually/actually.jpg" alt="Imagen sospechosa" style="max-width: 100%; max-height: 200px; width: auto; border: 1px solid #ccc;">
@@ -36,11 +39,24 @@ $csrfToken = getCtfCsrfToken();
 				</a>
 			</div>
 
-			<div id="feedback-flag" class="feedback"></div>
+			<div id="feedback-respuesta" class="feedback"></div>
+
+			<form id="respuesta-form">
+				<label for="respuesta-input">Respuesta:</label><br>
+				<input id="respuesta-input" name="respuesta" type="text" required autocomplete="off"/>
+				<button type="submit">Comprobar</button>
+			</form>
+		</section>
+
+		<section id="seccion-flag">
+			<h2>¡Conseguido!</h2>
+			<p id="mensaje-exito" style="color: green; font-weight: bold;"></p>
+			<p>Introdúcela aquí para validar el reto y sumar los puntos a tu equipo:</p>
+			
 			<form id="flag-form">
 				<label for="flag-input">Flag:</label><br>
 				<input id="flag-input" name="flag" type="text" required autocomplete="off" style="width: 300px;"/>
-				<button type="submit">Enviar flag</button>
+				<button type="submit">Enviar flag real</button>
 			</form>
 		</section>
 	</main>
@@ -67,36 +83,62 @@ $csrfToken = getCtfCsrfToken();
 		}
 
 		async function validarCookieUsuario() { await postBackend({ action: 'get_puntos' }); }
+		async function comprobarRespuesta(respuestaValue) { return postBackend({ action: 'comprobar_respuesta', id: CHALLENGE_ID, respuesta: respuestaValue }); }
+		async function getFlag() { return postBackend({ action: 'get_flag', id: CHALLENGE_ID }); }
 		async function submitFlag(flagValue) { return postBackend({ action: 'submit_flag', reto: CHALLENGE_ID, flag: flagValue }); }
+
+		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
+			event.preventDefault();
+			
+			const respuestaValue = document.getElementById('respuesta-input').value.trim();
+			const feedback = document.getElementById('feedback-respuesta');
+			
+			if (!respuestaValue) return;
+
+			try { await validarCookieUsuario(); } catch (error) { feedback.innerText = 'Error de sesión.'; feedback.style.color = 'red'; return; }
+
+			try {
+				const result = await comprobarRespuesta(respuestaValue);
+				if (result.correcta) {
+					const flagResult = await getFlag();
+					
+					feedback.innerText = '¡Has acertado!';
+					feedback.style.color = 'green';
+					
+					document.getElementById('mensaje-exito').innerText = 'Tu flag real es: ' + flagResult.flag;
+					document.getElementById('seccion-flag').style.display = 'block';
+					
+					document.getElementById('flag-input').value = flagResult.flag;
+					
+					document.querySelector('#respuesta-form button').disabled = true;
+					return;
+				}
+				feedback.innerText = 'Respuesta incorrecta.';
+				feedback.style.color = 'red';
+			} catch (error) {
+				feedback.innerText = 'Respuesta incorrecta o error de conexión.';
+				feedback.style.color = 'red';
+			}
+		});
 
 		document.getElementById('flag-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
 			
 			const flagValue = document.getElementById('flag-input').value.trim();
-			const feedback = document.getElementById('feedback-flag');
 			if (!flagValue) return;
 
-			try {
-				await validarCookieUsuario();
-			} catch (error) {
-				feedback.innerText = 'Error de sesión.';
-				feedback.style.color = 'red';
-				return;
-			}
+			try { await validarCookieUsuario(); } catch (error) { alert('Error de sesión.'); return; }
 
 			try {
 				const result = await submitFlag(flagValue);
 				if (result.correcta) {
-					feedback.innerText = '¡Hackeo completado! Puntos sumados a tu equipo.';
-					feedback.style.color = 'green';
+					alert('¡Hackeo completado! Puntos sumados a tu equipo.');
 					document.querySelector('#flag-form button').disabled = true;
 					return;
 				}
-				feedback.innerText = 'Flag incorrecta.';
-				feedback.style.color = 'red';
+				alert('Flag incorrecta.');
 			} catch (error) {
-				feedback.innerText = 'Flag incorrecta o ya has resuelto este reto.';
-				feedback.style.color = 'red';
+				alert('Flag incorrecta o ya has resuelto este reto.');
 			}
 		});
 	</script>
