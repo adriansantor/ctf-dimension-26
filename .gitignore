@@ -1,2 +1,9 @@
 ctf/logs/
 ctf/retos.csv
+
+ .idea/
+bootstrap-scss/
+composer.json
+composer.lock
+ctf/css/
+vendor/
