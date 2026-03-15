@@ -90,7 +90,104 @@ function loadScoreRows(string $csvPath): array
     return $rows;
 }
 
+function loadFirstSolves(string $logPath): array
+{
+    if (!is_file($logPath)) {
+        return [];
+    }
+
+    $handle = fopen($logPath, 'rb');
+    if ($handle === false) {
+        return [];
+    }
+
+    if (!flock($handle, LOCK_SH)) {
+        fclose($handle);
+        return [];
+    }
+
+    $firstSolvesByChallenge = [];
+
+    while (($line = fgets($handle)) !== false) {
+        $line = trim($line);
+        if ($line === '') {
+            continue;
+        }
+
+        $entry = json_decode($line, true);
+        if (!is_array($entry)) {
+            continue;
+        }
+
+        if (($entry['event'] ?? '') !== 'submit_flag') {
+            continue;
+        }
+
+        $context = $entry['context'] ?? null;
+        if (!is_array($context)) {
+            continue;
+        }
+
+        if (($context['result'] ?? '') !== 'accepted') {
+            continue;
+        }
+
+        $challenge = trim((string) ($context['reto'] ?? ''));
+        $teamB64 = trim((string) ($context['team_b64'] ?? ''));
+        $timestamp = trim((string) ($entry['timestamp'] ?? ''));
+
+        if ($challenge === '' || $teamB64 === '' || $timestamp === '') {
+            continue;
+        }
+
+        $timestampUnix = strtotime($timestamp);
+        if ($timestampUnix === false) {
+            continue;
+        }
+
+        $existing = $firstSolvesByChallenge[$challenge] ?? null;
+        if ($existing === null || $timestampUnix < $existing['timestamp_unix']) {
+            $firstSolvesByChallenge[$challenge] = [
+                'reto' => $challenge,
+                'team' => decodeTeamName($teamB64),
+                'timestamp' => $timestamp,
+                'timestamp_unix' => $timestampUnix,
+            ];
+        }
+    }
+
+    flock($handle, LOCK_UN);
+    fclose($handle);
+
+    $firstSolves = array_values($firstSolvesByChallenge);
+    usort($firstSolves, static function (array $a, array $b): int {
+        $byTime = $a['timestamp_unix'] <=> $b['timestamp_unix'];
+        if ($byTime !== 0) {
+            return $byTime;
+        }
+
+        return strcmp((string) $a['reto'], (string) $b['reto']);
+    });
+
+    $madridTimezone = new DateTimeZone('Europe/Madrid');
+
+    return array_map(static function (array $row) use ($madridTimezone): array {
+        try {
+            $madridDate = new DateTimeImmutable($row['timestamp']);
+            $row['timestamp'] = $madridDate
+                ->setTimezone($madridTimezone)
+                ->format('d/m/Y H:i:s') . ' (Madrid)';
+        } catch (Throwable) {
+            // Keep original timestamp if parsing fails.
+        }
+
+        unset($row['timestamp_unix']);
+        return $row;
+    }, $firstSolves);
+}
+
 $csvPath = __DIR__ . '/retos.csv';
+$logPath = __DIR__ . '/logs/backend.log';
 
 if (isset($_GET['data'])) {
     header('Content-Type: application/json; charset=utf-8');
@@ -99,6 +196,7 @@ if (isset($_GET['data'])) {
         'ok' => true,
         'generated_at' => date('c'),
         'rows' => loadScoreRows($csvPath),
+        'first_solves' => loadFirstSolves($logPath),
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -142,6 +240,21 @@ if (isset($_GET['data'])) {
                     <tbody id="table-body" class="table-bordered "></tbody>
                 </table>
             </div>
+
+            <div class="row mb-4">
+                <h2 class="h3">Primeras resoluciones</h2>
+                <table class="table-dark ">
+                    <thead>
+                    <tr class="fw-bold">
+                        <th>Reto</th>
+                        <th>Primer equipo</th>
+                        <th>Fecha</th>
+                    </tr>
+                    </thead>
+                    <tbody id="first-solves-body" class="table-bordered "></tbody>
+                </table>
+                <p id="first-solves-empty-msg" class="empty" hidden>No hay resoluciones registradas.</p>
+            </div>
         </div>
     </div>
 </div>
@@ -150,6 +263,8 @@ if (isset($_GET['data'])) {
     const chart = document.getElementById('chart');
     const tableBody = document.getElementById('table-body');
     const emptyMsg = document.getElementById('empty-msg');
+    const firstSolvesBody = document.getElementById('first-solves-body');
+    const firstSolvesEmptyMsg = document.getElementById('first-solves-empty-msg');
 
     function renderRows(rows) {
         chart.innerHTML = '';
@@ -188,17 +303,39 @@ if (isset($_GET['data'])) {
         }
     }
 
+    function renderFirstSolves(firstSolves) {
+        firstSolvesBody.innerHTML = '';
+
+        if (!firstSolves.length) {
+            firstSolvesEmptyMsg.hidden = false;
+            return;
+        }
+
+        firstSolvesEmptyMsg.hidden = true;
+
+        for (const solve of firstSolves) {
+            const tr = document.createElement('tr');
+            tr.className = 'align-middle';
+            tr.innerHTML =
+                `<td class="fw-bold text-white mb-1">${solve.reto}</td>` +
+                `<td><span class="badge bg-primary mb-1">${solve.team}</span></td>` +
+                `<td><span class="badge bg-secondary mb-1">${solve.timestamp}</span></td>`;
+            firstSolvesBody.appendChild(tr);
+        }
+    }
+
     async function refreshScoreboard() {
         try {
             const response = await fetch('scoreboard.php?data=1&t=' + Date.now(), {
                 cache: 'no-store',
             });
             const data = await response.json();
-            if (!response.ok || !data.ok || !Array.isArray(data.rows)) {
+            if (!response.ok || !data.ok || !Array.isArray(data.rows) || !Array.isArray(data.first_solves)) {
                 throw new Error('Formato invalido de datos');
             }
 
             renderRows(data.rows);
+            renderFirstSolves(data.first_solves);
         } catch (error) {
             console.error('No se pudo refrescar el scoreboard', error);
         }
