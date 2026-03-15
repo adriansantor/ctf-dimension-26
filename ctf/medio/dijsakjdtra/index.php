@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
-$challengeId = 'dijkstra';
+$challengeId = 'dijsakjdtra';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 ?>
@@ -12,18 +12,15 @@ $csrfToken = getCtfCsrfToken();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Una flag, no dos</title>
+	<title>dijsakjdtra</title>
 
 </head>
 <body>
 	<main>
-		<h1>Reto: Una flag, no dos</h1>
+		<h1>Reto: dijsakjdtra</h1>
 		<p style="font-size: 20px">
-			"Para este reto se te iba a dar la flag directamente como incentivo, pero un malvado estudiante de Lógica y Mátematicas Discretas quiso complicar el reto. Se te dará un archivo txt que representa un grafo de 10000 nodos. Cada línea representa una arista con el formato: nodo1 nodo2 peso char. Significa que nodo 1 tiene una arista que va a nodo 2 con un peso y un char asociado. Puedes encontrar el mensaje oculto?"
+			"Para este reto se te iba a dar la flag directamente como incentivo, pero un malvado estudiante de Lógica y Mátematicas Discretas quiso complicar el reto. Aquí tienes un grafo con una pequeña contraseña. Puedes encontrar el mensaje oculto?"
   	    </p>
-		<a href="/medio/dijkstra/flag.txt" download>
-			<button type="button" style="margin-top: 10px;">Descargar txt</button>
-		</a>
 		<section>
 			<h1>Enviar flag</h1>
 			<div id="feedback-flag" class="feedback"></div>
