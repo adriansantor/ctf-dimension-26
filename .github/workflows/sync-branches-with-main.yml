@@ -1,0 +1,71 @@
+name: Sync Branches With Main
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync remote branches to main
+        env:
+          MAIN_BRANCH: main
+          EXCLUDED_BRANCHES: main
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*'
+          main_sha="$(git rev-parse "origin/${MAIN_BRANCH}")"
+          echo "Main SHA: ${main_sha}"
+
+          mapfile -t remote_branches < <(
+            git for-each-ref --format='%(refname:strip=3)' refs/remotes/origin \
+            | grep -Ev '^(HEAD)$'
+          )
+
+          IFS=',' read -r -a excluded_raw <<< "${EXCLUDED_BRANCHES}"
+          excluded=()
+          for item in "${excluded_raw[@]}"; do
+            trimmed="$(echo "${item}" | xargs)"
+            if [[ -n "${trimmed}" ]]; then
+              excluded+=("${trimmed}")
+            fi
+          done
+
+          is_excluded() {
+            local branch="$1"
+            for ex in "${excluded[@]}"; do
+              if [[ "${branch}" == "${ex}" ]]; then
+                return 0
+              fi
+            done
+            return 1
+          }
+
+          for branch in "${remote_branches[@]}"; do
+            if is_excluded "${branch}"; then
+              echo "Skipping excluded branch: ${branch}"
+              continue
+            fi
+
+            echo "Syncing ${branch} to ${MAIN_BRANCH}"
+            if git push --force-with-lease origin "${main_sha}:refs/heads/${branch}"; then
+              echo "Synced ${branch}"
+            else
+              echo "Could not sync ${branch} (possibly branch protection). Continuing..."
+            fi
+          done
