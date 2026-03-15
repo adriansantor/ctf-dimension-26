@@ -144,7 +144,7 @@
     ID=cvque
 
 ##### Medio
-- dijsakjdtra [realizado]
+- dijsakjdtra [realizado]*
     Tienen que hacer dijsktra para encontrar el camino más rápido de un grafo o algo así
     ID=dijsakjdtra
 - coords gMaps
