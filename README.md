@@ -23,9 +23,9 @@
 - rsa
     Les damos una clave pública y una clave privada y les hacemos encodear un mensaje con rsa.
     ID= claves_confusas
-- buscar primer ataque masivo en internet
+- buscar primer ataque masivo en internet [realizado]
     ID= historia_importante
-- ASCII ampliar
+- ASCII ampliar [realizado]
     ID= mensaje_masivo
 
 ##### Medio
@@ -39,15 +39,15 @@
 - NFC
     Tienen que leer una tarjeta nfc que tendrá la flag
     ID= tarjeta_blanca
-- metadata foto
+- metadata foto [realizado]
     Tienen que descargar la foto y leer los metadatos para la flag
     ID= actually
 ##### Difícil
-- JWT
+- JWT [realizado]
     Tienen que extraer la flag de un JWT
     ID= telescopio
 - SQLi (dificil)
-- hash (john)
+- hash (john) [realizado]
     Tienen que romper un hash con john
     ID= sopadeletras
 - GET con cabecera
@@ -144,7 +144,7 @@
     ID=cvque
 
 ##### Medio
-- dijsakjdtra
+- dijsakjdtra [realizado]
     Tienen que hacer dijsktra para encontrar el camino más rápido de un grafo o algo así
     ID=dijsakjdtra
 - coords gMaps

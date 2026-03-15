@@ -22,10 +22,20 @@ $csrfToken = getCtfCsrfToken();
 			"Para este reto se te iba a dar la flag directamente como incentivo, pero un malvado estudiante de Lógica y Mátematicas Discretas quiso complicar el reto. Aquí tienes un grafo con una pequeña contraseña. Puedes encontrar el mensaje oculto?"
   	    </p>
 		<section>
+			<h1>Responder reto</h1>
+			<div id="feedback-respuesta" class="feedback"></div>
+			<form id="respuesta-form">
+				<label for="respuesta-input">Cuál es la respuesta?</label><br>
+				<input id="respuesta-input" name="respuesta" type="text" required autocomplete="off" style="width: 300px;"/>
+				<button type="submit">Comprobar respuesta</button>
+			</form>
+		</section>
+
+		<section id="flag-section" style="display: none;">
 			<h1>Enviar flag</h1>
 			<div id="feedback-flag" class="feedback"></div>
 			<form id="flag-form">
-				<label for="flag-input">Cuál es la flag?:</label><br>
+				<label for="flag-input">Cuál es la flag?</label><br>
 				<input id="flag-input" name="flag" type="text" required autocomplete="off" style="width: 300px;"/>
 				<button type="submit">Enviar flag</button>
 			</form>
@@ -66,6 +76,21 @@ $csrfToken = getCtfCsrfToken();
 			await postBackend({ action: 'get_puntos' });
 		}
 
+		async function comprobarRespuesta(respuestaValue) {
+			return postBackend({
+				action: 'comprobar_respuesta',
+				id: CHALLENGE_ID,
+				respuesta: respuestaValue,
+			});
+		}
+
+		async function getFlag() {
+			return postBackend({
+				action: 'get_flag',
+				id: CHALLENGE_ID,
+			});
+		}
+
 		async function submitFlag(flagValue) {
 			return postBackend({
 				action: 'submit_flag',
@@ -74,9 +99,46 @@ $csrfToken = getCtfCsrfToken();
 			});
 		}
 
+		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
+			event.preventDefault();
+
+			const respuestaValue = document.getElementById('respuesta-input').value.trim();
+			const feedback = document.getElementById('feedback-respuesta');
+			const flagSection = document.getElementById('flag-section');
+			const flagInput = document.getElementById('flag-input');
+			if (!respuestaValue) return;
+
+			try {
+				await validarCookieUsuario();
+			} catch (error) {
+				feedback.innerText = 'Error de sesión.';
+				feedback.style.color = 'red';
+				return;
+			}
+
+			try {
+				const result = await comprobarRespuesta(respuestaValue);
+				if (result.correcta) {
+					const flagResult = await getFlag();
+					feedback.innerText = 'Respuesta correcta. Aquí tienes la flag: ' + flagResult.flag;
+					feedback.style.color = 'green';
+					flagSection.style.display = 'block';
+					flagInput.value = flagResult.flag;
+					document.querySelector('#respuesta-form button').disabled = true;
+					return;
+				}
+				feedback.innerText = 'Respuesta incorrecta.';
+				feedback.style.color = 'red';
+				flagSection.style.display = 'none';
+			} catch (error) {
+				feedback.innerText = 'Respuesta incorrecta o error de conexión.';
+				feedback.style.color = 'red';
+			}
+		});
+
 		document.getElementById('flag-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
-			
+
 			const flagValue = document.getElementById('flag-input').value.trim();
 			const feedback = document.getElementById('feedback-flag');
 			if (!flagValue) return;
@@ -91,8 +153,13 @@ $csrfToken = getCtfCsrfToken();
 
 			try {
 				const result = await submitFlag(flagValue);
+				if (result.ya_hecha) {
+					feedback.innerText = 'Ya habías resuelto este reto.';
+					feedback.style.color = 'green';
+					return;
+				}
 				if (result.correcta) {
-					feedback.innerText = '¡Hackeo completado! Puntos sumados a tu equipo.';
+					feedback.innerText = '¡Flag correcta! Puntos sumados a tu equipo.';
 					feedback.style.color = 'green';
 					document.querySelector('#flag-form button').disabled = true;
 					return;
