@@ -26,7 +26,7 @@
   "harry_potter": {"dificultad_id": 2, "flag": "core{harry_potter}"},
   "morse": {"dificultad_id": 2, "flag": "core{morse}"},
   "espectro_audio": {"dificultad_id": 2, "flag": "core{espectro_audio}"},
-  "dijsakjdtra": {"dificultad_id": 2, "flag": "core{dijsakjdtra}"},
+  "dijkstra": {"dificultad_id": 2, "flag": "core{dijkstra_para_repasar_logica_y_matematicas_discretas}"},
   "coords_gmaps": {"dificultad_id": 2, "flag": "core{coords_gmaps}"},
   "multisim": {"dificultad_id": 2, "flag": "core{multisim}"},
   "parcial_fundamentos_de_seguridad": {"dificultad_id": 2, "flag": "core{parcial_fundamentos_de_seguridad}"},
