@@ -77,7 +77,7 @@
   },
   {
     "id_reto": "actually",
-    "respuesta": "PLACEHOLDER"
+    "respuesta": "core{mmm_actually}"
   },
   {
     "id_reto": "regex",
@@ -121,7 +121,7 @@
   },
   {
     "id_reto": "telescopio",
-    "respuesta": "PLACEHOLDER"
+    "respuesta": "Calle_Gran_Via_42"
   },
   {
     "id_reto": "sqli_dificil",
