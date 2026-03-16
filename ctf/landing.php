@@ -441,21 +441,54 @@ if (isset($_GET['data'])) {
 
             const barRow = document.createElement('div');
             barRow.className = 'row align-items-center mb-2 p-2 border border-secondary rounded-3';
-            barRow.innerHTML =
-                `<div class="col-4 fw-bold text-white">${row.team} <span class="badge bg-secondary">${row.difficulty}</span></div>` +
-                `<div class="col">
-        <div class="progress" style="height:22px">
-            <div class="progress-bar bg-success" role="progressbar" style="width:${width}%">${points} pts</div>
-        </div>
-    </div>`;
+
+            const colLabel = document.createElement('div');
+            colLabel.className = 'col-4 fw-bold text-white';
+            colLabel.appendChild(document.createTextNode(row.team + ' '));
+            const diffBadge = document.createElement('span');
+            diffBadge.className = 'badge bg-secondary';
+            diffBadge.textContent = row.difficulty;
+            colLabel.appendChild(diffBadge);
+
+            const colBar = document.createElement('div');
+            colBar.className = 'col';
+            const progressDiv = document.createElement('div');
+            progressDiv.className = 'progress';
+            progressDiv.style.height = '22px';
+            const progressBar = document.createElement('div');
+            progressBar.className = 'progress-bar bg-success';
+            progressBar.setAttribute('role', 'progressbar');
+            progressBar.style.width = width + '%';
+            progressBar.textContent = points + ' pts';
+            progressDiv.appendChild(progressBar);
+            colBar.appendChild(progressDiv);
+
+            barRow.appendChild(colLabel);
+            barRow.appendChild(colBar);
             chart.appendChild(barRow);
 
             const tr = document.createElement('tr');
             tr.className = 'align-middle';
-            tr.innerHTML =
-                `<td class="fw-bold text-white mb-1">${row.team}</td>` +
-                `<td><span class="badge bg-secondary mb-1">${row.difficulty} (${row.difficulty_id})</span></td>` +
-                `<td><span class="badge bg-success mb-1">${points} pts</span></td>`;
+
+            const td1 = document.createElement('td');
+            td1.className = 'fw-bold text-white mb-1';
+            td1.textContent = row.team;
+
+            const td2 = document.createElement('td');
+            const badge2 = document.createElement('span');
+            badge2.className = 'badge bg-secondary mb-1';
+            badge2.textContent = row.difficulty + ' (' + String(row.difficulty_id) + ')';
+            td2.appendChild(badge2);
+
+            const td3 = document.createElement('td');
+            const badge3 = document.createElement('span');
+            badge3.className = 'badge bg-success mb-1';
+            badge3.textContent = points + ' pts';
+            td3.appendChild(badge3);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
             tableBody.appendChild(tr);
         }
     }
