@@ -105,7 +105,7 @@
   },
   {
     "id_reto": "dijsakjdtra",
-    "respuesta": "PLACEHOLDER"
+    "respuesta": "fvckgraphs"
   },
   {
     "id_reto": "tesoro",
@@ -157,6 +157,10 @@
   },
   {
     "id_reto": "xss",
+    "respuesta": "PLACEHOLDER"
+  },
+  {
+    "id_reto": "hardickstra",
     "respuesta": "PLACEHOLDER"
   }
 ]

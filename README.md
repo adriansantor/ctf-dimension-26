@@ -144,7 +144,7 @@
     ID=cvque
 
 ##### Medio
-- dijsakjdtra [realizado]*
+- dijsakjdtra [realizado]
     Tienen que hacer dijsktra para encontrar el camino más rápido de un grafo o algo así
     ID=dijsakjdtra
 - coords gMaps
@@ -163,6 +163,9 @@
     ID=tiburon_en_el_agua
 - XSS
     ns muy bien q poner en este la vd
+- grafos vengativos
+    encontrar la flag en un grafo de 10000 nodos (tienen que programarlo, no se puede hacer a mano)
+    ID=hardickstra
 
 ## Misc.
 

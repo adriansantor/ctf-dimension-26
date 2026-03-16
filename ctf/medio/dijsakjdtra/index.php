@@ -6,6 +6,11 @@ require __DIR__ . '/../../csrf.php';
 $challengeId = 'dijsakjdtra';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
+$scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
+if ($scriptDir === '/' || $scriptDir === '.') {
+	$scriptDir = '';
+}
+$graphImageUrl = $scriptDir . '/grafo.jpeg';
 ?>
 <!doctype html>
 <html lang="es">
@@ -19,8 +24,11 @@ $csrfToken = getCtfCsrfToken();
 	<main>
 		<h1>Reto: dijsakjdtra</h1>
 		<p style="font-size: 20px">
-			"Para este reto se te iba a dar la flag directamente como incentivo, pero un malvado estudiante de Lógica y Mátematicas Discretas quiso complicar el reto. Aquí tienes un grafo con una pequeña contraseña. Puedes encontrar el mensaje oculto?"
+			"Para este reto se te iba a dar la flag directamente como incentivo, pero un malvado estudiante de Lógica y Mátematicas Discretas quiso complicar el reto. Aquí tienes un grafo con una pequeña contraseña. Tienes que encontrar el camino más corto de la "f" a la "s". Puedes encontrar el mensaje oculto?"
   	    </p>
+		<section style="margin: 1rem 0;">
+			<img src="<?php echo htmlspecialchars($graphImageUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="Grafo del reto" style="max-width: 100%; height: auto; display: block;" />
+		</section>
 		<section>
 			<h1>Responder reto</h1>
 			<div id="feedback-respuesta" class="feedback"></div>
