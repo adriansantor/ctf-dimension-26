@@ -162,6 +162,10 @@ setcookie('sesion_reto', $jwt_token, time() + 3600, '/');
 			if (!flagValue) return;
 			try {
 				const result = await submitFlag(flagValue);
+				if (result.ya_hecha) {
+					alert('Ya habias resuelto este reto. No se suman puntos de nuevo.');
+					return;
+				}
 				if (result.correcta) {
 					alert('¡Flag correcta! Puntos sumados a tu equipo.');
 					document.getElementById('flag-section').style.display = 'none';
