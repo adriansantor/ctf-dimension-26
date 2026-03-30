@@ -12,39 +12,46 @@ $csrfToken = getCtfCsrfToken();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css"/>
 	<title>Reto: Primer ataque masivo</title>
-	<style>
-		body { font-family: sans-serif; margin: 2rem; max-width: 720px; }
-		section { border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; }
-		input, button { padding: 0.5rem; margin-top: 0.5rem; }
-		.feedback { margin-top: 1rem; font-weight: bold; }
-	</style>
 </head>
-<body>
-	<main>
-		<h1>Búsqueda: El primer ataque masivo</h1>
-		<p>Para conseguir la flag de este reto tendrás que tirar de historia de la ciberseguridad.</p>
-		<section>
-			<h2>Pregunta</h2>
-			<p>¿Cuál es el nombre del que se considera el primer ciber-ataque masivo en la historia de Internet?</p>
-			<form id="respuesta-form">
-				<label for="respuesta-input">Tu respuesta:</label><br>
-				<input id="respuesta-input" name="respuesta" type="text" placeholder="Ej:Troyano" required autocomplete="off" />
-				<button type="submit">Comprobar</button>
-			</form>
-			
-			<div id="feedback" class="feedback"></div>
-		</section>
+<body class="body-bg">
+	<main class="container py-4">
+		<div class="row align-center g-4 mb-4">
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Historia importante</h1>
+		</div>
 
-		<section id="flag-section" style="display: none;">
-			<h2>¡Conseguido!</h2>
-			<p>Introduce la flag que has obtenido para sumar los puntos:</p>
-			<form id="flag-form">
-				<label for="flag-input">Flag:</label><br>
-				<input id="flag-input" name="flag" type="text" required autocomplete="off" style="width: 300px;" />
-				<button type="submit">Enviar la flag</button>
-			</form>
-		</section>
+		<div class="row justify-content-center g-4">
+			<div class="col-12 col-lg-10">
+				<div class="border border-secondary rounded-3 p-4 h-100 mb-4">
+					<h2 class="h3 fw-bold">Pregunta</h2>
+					<p class="mb-3">Para conseguir la flag de este reto tendras que tirar de historia de la ciberseguridad.</p>
+					<p>¿Cual es el nombre del que se considera el primer ciber-ataque masivo en la historia de Internet?</p>
+					<form id="respuesta-form" class="d-flex flex-column gap-2">
+						<label for="respuesta-input" class="form-label mb-0">Tu respuesta</label>
+						<input id="respuesta-input" name="respuesta" type="text" placeholder="Ej: Troyano" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<button type="submit" class="btn btn-outline-light mt-2">Comprobar</button>
+					</form>
+					<div id="feedback" class="status mt-3"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row justify-content-center g-4">
+			<div class="col-12 col-lg-10">
+				<section id="flag-section" class="border border-secondary rounded-3 p-4 h-100" style="display: none;">
+					<h2 class="h3 fw-bold">Conseguido</h2>
+					<p>Introduce la flag que has obtenido para sumar los puntos:</p>
+					<form id="flag-form" class="d-flex flex-column gap-2">
+						<label for="flag-input" class="form-label mb-0">Flag</label>
+						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<button type="submit" class="btn btn-outline-light mt-2">Enviar la flag</button>
+					</form>
+				</section>
+			</div>
+		</div>
 	</main>
 
 	<script>

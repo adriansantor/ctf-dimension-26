@@ -17,37 +17,52 @@ $graphImageUrl = $scriptDir . '/grafo.jpeg';
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css"/>
 	<title>dijsakjdtra</title>
-
 </head>
-<body>
-	<main>
-		<h1>Reto: dijsakjdtra</h1>
-		<p style="font-size: 20px">
-			"Para este reto se te iba a dar la flag directamente como incentivo, pero un malvado estudiante de Lógica y Mátematicas Discretas quiso complicar el reto. Aquí tienes un grafo con una pequeña contraseña. Tienes que encontrar el camino más corto de la "f" a la "s". Puedes encontrar el mensaje oculto?"
-  	    </p>
-		<section style="margin: 1rem 0;">
-			<img src="<?php echo htmlspecialchars($graphImageUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="Grafo del reto" style="max-width: 100%; height: auto; display: block;" />
-		</section>
-		<section>
-			<h1>Responder reto</h1>
-			<div id="feedback-respuesta" class="feedback"></div>
-			<form id="respuesta-form">
-				<label for="respuesta-input">Cuál es la respuesta?</label><br>
-				<input id="respuesta-input" name="respuesta" type="text" required autocomplete="off" style="width: 300px;"/>
-				<button type="submit">Comprobar respuesta</button>
-			</form>
-		</section>
+<body class="body-bg">
+	<main class="container py-4">
+		<div class="row align-center g-4 mb-4">
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">dijsakjdtra</h1>
+		</div>
 
-		<section id="flag-section" style="display: none;">
-			<h1>Enviar flag</h1>
-			<div id="feedback-flag" class="feedback"></div>
-			<form id="flag-form">
-				<label for="flag-input">Cuál es la flag?</label><br>
-				<input id="flag-input" name="flag" type="text" required autocomplete="off" style="width: 300px;"/>
-				<button type="submit">Enviar flag</button>
-			</form>
-		</section>
+		<div class="row justify-content-center g-4">
+			<div class="col-12 col-lg-10">
+				<div class="border border-secondary rounded-3 p-4 h-100 mb-4">
+					<p class="fs-5">Para este reto se te iba a dar la flag directamente como incentivo, pero un malvado estudiante de logica y matematicas discretas quiso complicar el reto.</p>
+					<p>Aqui tienes un grafo con una pequena contraseña. Tienes que encontrar el camino mas corto de la f a la s. ¿Puedes encontrar el mensaje oculto?</p>
+					<img src="<?php echo htmlspecialchars($graphImageUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="Grafo del reto" class="img-fluid border border-secondary rounded-2" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row g-4 justify-content-center">
+			<div class="col-12 col-lg-5">
+				<section class="border border-secondary rounded-3 p-4 h-100">
+					<h2 class="h3 fw-bold mb-3">Responder reto</h2>
+					<div id="feedback-respuesta" class="status mb-2"></div>
+					<form id="respuesta-form" class="d-flex flex-column gap-2">
+						<label for="respuesta-input" class="form-label mb-0">¿Cual es la respuesta?</label>
+						<input id="respuesta-input" name="respuesta" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off"/>
+						<button type="submit" class="btn btn-outline-light mt-2">Comprobar respuesta</button>
+					</form>
+				</section>
+			</div>
+
+			<div class="col-12 col-lg-5">
+				<section id="flag-section" class="border border-secondary rounded-3 p-4 h-100" style="display: none;">
+					<h2 class="h3 fw-bold mb-3">Enviar flag</h2>
+					<div id="feedback-flag" class="status mb-2"></div>
+					<form id="flag-form" class="d-flex flex-column gap-2">
+						<label for="flag-input" class="form-label mb-0">¿Cual es la flag?</label>
+						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off"/>
+						<button type="submit" class="btn btn-outline-light mt-2">Enviar flag</button>
+					</form>
+				</section>
+			</div>
+		</div>
 	</main>
 
 	<script>

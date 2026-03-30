@@ -13,52 +13,57 @@ $csrfToken = getCtfCsrfToken();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css"/>
 	<title>Reto: Metadata en una foto</title>
-	<style>
-		body { font-family: sans-serif; margin: 2rem; max-width: 720px; }
-		section { border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; }
-		input, button { padding: 0.5rem; margin-top: 0.5rem; cursor: pointer; }
-		.feedback { margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; }
-		#seccion-flag { display: none; background-color: #f9fff9; border-color: #4caf50; }
-	</style>
 </head>
-<body>
-	<main>
-		<h1>Búsqueda: Encontrar la metadata en la foto</h1>
-		<p>Para conseguir la flag de este reto tienes que tirar de Fundamentos de Seguridad.</p>
+<body class="body-bg">
+	<main class="container py-4">
+		<div class="row align-center g-4 mb-4">
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Actually</h1>
+		</div>
 
-		<section>
-			<h2>Pregunta</h2>
-			<p>¿Cuál es la palabra escondida en la metadata de esta imagen?</p>
-			
-			<div style="text-align: center; margin-bottom: 1rem;">
-				<img src="/medio/actually/actually.jpg" alt="Imagen sospechosa" style="max-width: 100%; max-height: 200px; width: auto; border: 1px solid #ccc;">
-				<br>
-				<a href="/medio/actually/actually.jpg" download>
-					<button type="button" style="margin-top: 10px;">Descargar imagen</button>
-				</a>
+		<div class="row justify-content-center g-4">
+			<div class="col-12 col-lg-10">
+				<section class="border border-secondary rounded-3 p-4 h-100 mb-4">
+					<h2 class="h3 fw-bold">Pregunta</h2>
+					<p>Para conseguir la flag de este reto tienes que tirar de fundamentos de seguridad.</p>
+					<p>¿Cual es la palabra escondida en la metadata de esta imagen?</p>
+
+					<div class="text-center mb-3">
+						<img src="/medio/actually/actually.jpg" alt="Imagen sospechosa" class="img-fluid border border-secondary rounded-2" style="max-height: 220px; width: auto;">
+						<div class="mt-2">
+							<a href="/medio/actually/actually.jpg" download class="btn btn-outline-light">Descargar imagen</a>
+						</div>
+					</div>
+
+					<div id="feedback-respuesta" class="status mt-2 mb-3"></div>
+
+					<form id="respuesta-form" class="d-flex flex-column gap-2">
+						<label for="respuesta-input" class="form-label mb-0">Respuesta</label>
+						<input id="respuesta-input" name="respuesta" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off"/>
+						<button type="submit" class="btn btn-outline-light mt-2">Comprobar</button>
+					</form>
+				</section>
 			</div>
+		</div>
 
-			<div id="feedback-respuesta" class="feedback"></div>
+		<div class="row justify-content-center g-4">
+			<div class="col-12 col-lg-10">
+				<section id="seccion-flag" class="border border-secondary rounded-3 p-4 h-100" style="display: none;">
+					<h2 class="h3 fw-bold">Conseguido</h2>
+					<p id="mensaje-exito" class="text-success fw-bold"></p>
+					<p>Introdúcela aquí para validar el reto y sumar los puntos a tu equipo:</p>
 
-			<form id="respuesta-form">
-				<label for="respuesta-input">Respuesta:</label><br>
-				<input id="respuesta-input" name="respuesta" type="text" required autocomplete="off"/>
-				<button type="submit">Comprobar</button>
-			</form>
-		</section>
-
-		<section id="seccion-flag">
-			<h2>¡Conseguido!</h2>
-			<p id="mensaje-exito" style="color: green; font-weight: bold;"></p>
-			<p>Introdúcela aquí para validar el reto y sumar los puntos a tu equipo:</p>
-			
-			<form id="flag-form">
-				<label for="flag-input">Flag:</label><br>
-				<input id="flag-input" name="flag" type="text" required autocomplete="off" style="width: 300px;"/>
-				<button type="submit">Enviar flag real</button>
-			</form>
-		</section>
+					<form id="flag-form" class="d-flex flex-column gap-2">
+						<label for="flag-input" class="form-label mb-0">Flag</label>
+						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off"/>
+						<button type="submit" class="btn btn-outline-light mt-2">Enviar flag real</button>
+					</form>
+				</section>
+			</div>
+		</div>
 	</main>
 
 	<script>

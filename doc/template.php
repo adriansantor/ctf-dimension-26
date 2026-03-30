@@ -12,23 +12,42 @@ $csrfToken = getCtfCsrfToken();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css"/>
 	<title>Template Reto CTF</title>
 </head>
-<body>
-	<main>
-		<h1>Responder pregunta</h1>
-		<form id="respuesta-form">
-			<label for="respuesta-input">Pregunta</label>
-			<input id="respuesta-input" name="respuesta" type="text" required autocomplete="off" />
-			<button type="submit">Submit</button>
-		</form>
+<body class="body-bg">
+	<main class="container py-4">
+		<div class="row align-center g-4 mb-4">
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Template reto CTF</h1>
+		</div>
 
-		<h2>Enviar flag</h2>
-		<form id="flag-form">
-			<label for="flag-input">Flag</label>
-			<input id="flag-input" name="flag" type="text" required autocomplete="off" />
-			<button type="submit">Comprobar flag</button>
-		</form>
+		<div class="row g-4 justify-content-center">
+			<div class="col-12 col-lg-5">
+				<div class="border border-secondary rounded-3 p-4 h-100">
+					<h2 class="h3 fw-bold mb-3">Responder pregunta</h2>
+					<form id="respuesta-form" class="d-flex flex-column gap-2">
+						<label for="respuesta-input" class="form-label mb-0">Pregunta</label>
+						<input id="respuesta-input" name="respuesta" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<button type="submit" class="btn btn-outline-light mt-2">Comprobar respuesta</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="col-12 col-lg-5">
+				<div class="border border-secondary rounded-3 p-4 h-100">
+					<h2 class="h3 fw-bold mb-3">Enviar flag</h2>
+					<form id="flag-form" class="d-flex flex-column gap-2">
+						<label for="flag-input" class="form-label mb-0">Flag</label>
+						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<button type="submit" class="btn btn-outline-light mt-2">Comprobar flag</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<p id="status" class="status mt-3 text-center" aria-live="polite"></p>
 	</main>
 
 	<script>
@@ -88,6 +107,12 @@ $csrfToken = getCtfCsrfToken();
 			});
 		}
 
+		function setStatus(message, isError = false) {
+			const status = document.getElementById('status');
+			status.textContent = message;
+			status.style.color = isError ? '#b00020' : '#0a6b0a';
+		}
+
 		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
 
@@ -95,14 +120,14 @@ $csrfToken = getCtfCsrfToken();
 			const respuestaValue = input.value.trim();
 
 			if (!respuestaValue) {
-				alert('Introduce una respuesta.');
+				setStatus('Introduce una respuesta.', true);
 				return;
 			}
 
 			try {
 				await validarCookieUsuario();
 			} catch (error) {
-				alert('cookien\'t');
+				setStatus('cookien\'t', true);
 				return;
 			}
 
@@ -110,13 +135,13 @@ $csrfToken = getCtfCsrfToken();
 				const result = await comprobarRespuesta(respuestaValue);
 				if (result.correcta) {
 					const flagResult = await getFlag();
-					alert('Flag: ' + flagResult.flag);
+					setStatus('Flag: ' + flagResult.flag);
 					return;
 				}
 
-				alert('Respuesta incorrecta');
+				setStatus('Respuesta incorrecta', true);
 			} catch (error) {
-				alert('Respuesta incorrecta');
+				setStatus('Respuesta incorrecta', true);
 			}
 		});
 
@@ -127,27 +152,27 @@ $csrfToken = getCtfCsrfToken();
 			const flagValue = input.value.trim();
 
 			if (!flagValue) {
-				alert('Introduce una flag.');
+				setStatus('Introduce una flag.', true);
 				return;
 			}
 
 			try {
 				await validarCookieUsuario();
 			} catch (error) {
-				alert('cookien\'t');
+				setStatus('cookien\'t', true);
 				return;
 			}
 
 			try {
 				const result = await submitFlag(flagValue);
 				if (result.correcta) {
-					alert('Flag correcta');
+					setStatus('Flag correcta');
 					return;
 				}
 
-				alert('Flag incorrecta');
+				setStatus('Flag incorrecta', true);
 			} catch (error) {
-				alert('Flag incorrecta');
+				setStatus('Flag incorrecta', true);
 			}
 		});
 	</script>

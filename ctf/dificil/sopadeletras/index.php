@@ -12,63 +12,71 @@ $csrfToken = getCtfCsrfToken();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css"/>
 	<title>Sopa de Letras</title>
 </head>
-<body>
-	<main>
-		<h1>Sopa de Letras</h1>
-        <p>
-            Queremos poder acceder al panel de administrador de la Universidad Patatuda de Madrid
-            para poder editar las notas de una cierta asignatura de manera que aprueben todos los alumnos.
-            Con este objetivo hemos conseguido acceder a su base de datos y hemos encontrado esto:
-        </p>
+<body class="body-bg">
+	<main class="container py-4">
+		<div class="row align-center g-4 mb-4">
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Sopa de letras</h1>
+		</div>
 
-       <!-- Tablita to guapa que me ha hecho chatgpt -->
-		<table style="border-collapse:collapse; width:100%; max-width:400px; font-family:monospace; border:1px solid #444;">
-			<tr>
-				<th style="border:1px solid #444; padding:8px; text-align:left; background:#f0f0f0;">Username</th>
-				<th style="border:1px solid #444; padding:8px; text-align:left; background:#f0f0f0;">Password</th>
-			</tr>
-			<tr>
-				<td style="border:1px solid #444; padding:8px;">admin</td>
-				<td style="border:1px solid #444; padding:8px;">$2a$12$dFQgN1b2ivWo3K8CZ8x36ePJF6nSIGVS8yuNvu6cdIrvV35vyJw4y</td>
-			</tr>
-		</table>
-        <br>
-        <p>
-            No conseguimos acceder a la cuenta del administrador usando esa contraseña, nos ayudas?
-        </p>
-        <br>
-        <br>
-        <br>
+		<div class="row justify-content-center g-4">
+			<div class="col-12 col-lg-10">
+				<div class="border border-secondary rounded-3 p-4 h-100 mb-4">
+					<p>Queremos poder acceder al panel de administrador de la Universidad Patatuda de Madrid para editar las notas y que aprueben todos.</p>
+					<p>Con este objetivo hemos accedido a su base de datos y hemos encontrado esto:</p>
 
-        <section id="login-section">
-            <h2>Inicio de sesión de administrador</h2>
-            <form id="respuesta-form" style="display:flex; flex-direction:column; gap:0.5rem; max-width:320px;">
-                <div style="display:flex; flex-direction:column;">
-                    <label for="respuesta-user">Usuario</label>
-                    <input id="respuesta-user" name="respuesta-user" type="text" required autocomplete="off" />
-                </div>
-                <div style="display:flex; flex-direction:column;">
-                    <label for="respuesta-password">Contraseña</label>
-                    <input id="respuesta-password" name="respuesta-password" type="text" required autocomplete="off" />
-                </div>
-                <button type="submit">Iniciar sesión</button>
-            </form>
-            <p id="mensaje-login" style="display: none">
-                Bienvenido administrador! Aquí tienes tu código ultrasecreto:
-            </p>
-        </section>
-        <br>
+					<div class="table-responsive">
+						<table class="table table-dark table-bordered mb-3 font-monospace">
+							<thead>
+								<tr>
+									<th>Username</th>
+									<th>Password</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>admin</td>
+									<td>$2a$12$dFQgN1b2ivWo3K8CZ8x36ePJF6nSIGVS8yuNvu6cdIrvV35vyJw4y</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
-        <section id="flag-section" style="display:none">
-            <h2>Panel de edición de notas</h2>
-            <form id="flag-form">
-                <label for="flag-input">Introduce código ultrasecreto para acceder:</label>
-                <input id="flag-input" name="flag" type="text" required autocomplete="off" />
-                <button type="submit">Acceder</button>
-            </form>
-        </section>
+					<p>No conseguimos acceder a la cuenta del administrador usando esa contraseña, ¿nos ayudas?</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="row g-4 justify-content-center">
+			<div class="col-12 col-lg-5">
+				<section id="login-section" class="border border-secondary rounded-3 p-4 h-100">
+					<h2 class="h3 fw-bold mb-3">Inicio de sesion de administrador</h2>
+					<form id="respuesta-form" class="d-flex flex-column gap-2">
+						<label for="respuesta-user" class="form-label mb-0">Usuario</label>
+						<input id="respuesta-user" name="respuesta-user" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<label for="respuesta-password" class="form-label mb-0">Contraseña</label>
+						<input id="respuesta-password" name="respuesta-password" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<button type="submit" class="btn btn-outline-light mt-2">Iniciar sesion</button>
+					</form>
+					<p id="mensaje-login" class="status mt-3" style="display: none">Bienvenido administrador! Aqui tienes tu codigo ultrasecreto:</p>
+				</section>
+			</div>
+
+			<div class="col-12 col-lg-5">
+				<section id="flag-section" class="border border-secondary rounded-3 p-4 h-100" style="display:none">
+					<h2 class="h3 fw-bold mb-3">Panel de edicion de notas</h2>
+					<form id="flag-form" class="d-flex flex-column gap-2">
+						<label for="flag-input" class="form-label mb-0">Introduce codigo ultrasecreto para acceder</label>
+						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<button type="submit" class="btn btn-outline-light mt-2">Acceder</button>
+					</form>
+				</section>
+			</div>
+		</div>
 	</main>
 
 	<script>

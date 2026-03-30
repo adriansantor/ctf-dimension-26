@@ -1,7 +1,7 @@
 ctf/logs/
 ctf/retos.csv
 
- .idea/
+.idea/
 bootstrap-scss/
 composer.json
 composer.lock
