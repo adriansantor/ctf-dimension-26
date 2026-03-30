@@ -24,7 +24,7 @@
   "exploracion": {"dificultad_id": 2, "flag": "core{exploracion}"},
   "alta_torre": {"dificultad_id": 2, "flag": "core{alta_torre}"},
   "varita": {"dificultad_id": 2, "flag": "core{varita}"},
-  "morsa": {"dificultad_id": 2, "flag": "core{morse suena como morsa}"},
+  "morsa": {"dificultad_id": 2, "flag": "core{morsesuenacomomorsa}"},
   "fantasma": {"dificultad_id": 2, "flag": "core{fantasma}"},
   "dijsakjdtra": {"dificultad_id": 2, "flag": "core{dijsakjdtra}"},
   "tesoro": {"dificultad_id": 2, "flag": "core{tesoro}"},
