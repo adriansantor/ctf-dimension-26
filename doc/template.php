@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require __DIR__ . '/../ctf/csrf.php';
+require __DIR__ . '/../../csrf.php';
 
 $challengeId = 'ID_RETO';
 $backendUrl = '/backend.php';
