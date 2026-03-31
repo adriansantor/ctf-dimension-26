@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
-$challengeId = 'ID_RETO';
+$challengeId = 'morsa';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 ?>
@@ -15,12 +15,23 @@ $csrfToken = getCtfCsrfToken();
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/style.css"/>
-	<title>Template Reto CTF</title>
+	<title>Reto: Morsa</title>
 </head>
 <body class="body-bg">
 	<main class="container py-4">
 		<div class="row align-center g-4 mb-4">
-			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Template reto CTF</h1>
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Message in a Bottle</h1>
+		</div>
+
+		<div class="row justify-content-center g-4">
+			<div class="col-12 col-lg-10">
+				<div class="border border-secondary rounded-3 p-4 h-100 mb-4 text-center">
+					<p class="mb-3 fs-5">Nos ha llegado un pendrive en una botella misteriosamente a la puerta de Core Dumped; necesitamos ayuda para descifrar el audio que hemos encontrado.</p>
+					<h2 class="h3 fw-bold mb-3">Escucha nuestro codigo Morse</h2>
+					<p>Haz clic abajo para bajar el archivo MP3 directamente a tu carpeta de descargas.</p>
+					<a href="/medio/morsa/morse.mp3" download="mensaje_morse.mp3" class="btn btn-outline-light">Descargar MP3</a>
+				</div>
+			</div>
 		</div>
 
 		<div class="row g-4 justify-content-center">

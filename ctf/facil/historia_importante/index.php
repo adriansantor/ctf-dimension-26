@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
-$challengeId = 'ID_RETO';
+$challengeId = 'historia_importante';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 ?>
@@ -15,39 +15,43 @@ $csrfToken = getCtfCsrfToken();
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/style.css"/>
-	<title>Template Reto CTF</title>
+	<title>Reto: Primer ataque masivo</title>
 </head>
 <body class="body-bg">
 	<main class="container py-4">
 		<div class="row align-center g-4 mb-4">
-			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Template reto CTF</h1>
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Historia importante</h1>
 		</div>
 
-		<div class="row g-4 justify-content-center">
-			<div class="col-12 col-lg-5">
-				<div class="border border-secondary rounded-3 p-4 h-100">
-					<h2 class="h3 fw-bold mb-3">Responder pregunta</h2>
+		<div class="row justify-content-center g-4">
+			<div class="col-12 col-lg-10">
+				<div class="border border-secondary rounded-3 p-4 h-100 mb-4">
+					<h2 class="h3 fw-bold">Pregunta</h2>
+					<p class="mb-3">Para conseguir la flag de este reto tendras que tirar de historia de la ciberseguridad.</p>
+					<p>¿Cual es el nombre del que se considera el primer ciber-ataque masivo en la historia de Internet?</p>
 					<form id="respuesta-form" class="d-flex flex-column gap-2">
-						<label for="respuesta-input" class="form-label mb-0">Pregunta</label>
-						<input id="respuesta-input" name="respuesta" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
-						<button type="submit" class="btn btn-outline-light mt-2">Comprobar respuesta</button>
+						<label for="respuesta-input" class="form-label mb-0">Tu respuesta</label>
+						<input id="respuesta-input" name="respuesta" type="text" placeholder="Ej: Troyano" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<button type="submit" class="btn btn-outline-light mt-2">Comprobar</button>
 					</form>
+					<div id="feedback" class="status mt-3"></div>
 				</div>
 			</div>
+		</div>
 
-			<div class="col-12 col-lg-5">
-				<div class="border border-secondary rounded-3 p-4 h-100">
-					<h2 class="h3 fw-bold mb-3">Enviar flag</h2>
+		<div class="row justify-content-center g-4">
+			<div class="col-12 col-lg-10">
+				<section id="flag-section" class="border border-secondary rounded-3 p-4 h-100" style="display: none;">
+					<h2 class="h3 fw-bold">Conseguido</h2>
+					<p>Introduce la flag que has obtenido para sumar los puntos:</p>
 					<form id="flag-form" class="d-flex flex-column gap-2">
 						<label for="flag-input" class="form-label mb-0">Flag</label>
 						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
-						<button type="submit" class="btn btn-outline-light mt-2">Comprobar flag</button>
+						<button type="submit" class="btn btn-outline-light mt-2">Enviar la flag</button>
 					</form>
-				</div>
+				</section>
 			</div>
 		</div>
-
-		<p id="status" class="status mt-3 text-center" aria-live="polite"></p>
 	</main>
 
 	<script>
@@ -70,11 +74,11 @@ $csrfToken = getCtfCsrfToken();
 			try {
 				data = await response.json();
 			} catch (error) {
-				throw new Error('backend murió');
+				throw new Error('El backend no responde');
 			}
 
 			if (!response.ok || !data.ok) {
-				throw new Error(data.error || 'backend murió');
+				throw new Error(data.error || 'Error del backend');
 			}
 
 			return data;
@@ -83,7 +87,6 @@ $csrfToken = getCtfCsrfToken();
 		async function validarCookieUsuario() {
 			await postBackend({ action: 'get_puntos' });
 		}
-
 		async function comprobarRespuesta(respuestaValue) {
 			return postBackend({
 				action: 'comprobar_respuesta',
@@ -107,72 +110,60 @@ $csrfToken = getCtfCsrfToken();
 			});
 		}
 
-		function setStatus(message, isError = false) {
-			const status = document.getElementById('status');
-			status.textContent = message;
-			status.style.color = isError ? '#b00020' : '#0a6b0a';
-		}
-
-		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
+			document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
-
 			const input = document.getElementById('respuesta-input');
 			const respuestaValue = input.value.trim();
+			const feedback = document.getElementById('feedback');
+			const flagSection = document.getElementById('flag-section');
+			const flagInput = document.getElementById('flag-input');
 
-			if (!respuestaValue) {
-				setStatus('Introduce una respuesta.', true);
-				return;
-			}
+			if (!respuestaValue) return;
 
 			try {
 				await validarCookieUsuario();
 			} catch (error) {
-				setStatus('cookien\'t', true);
+				feedback.style.color = '#b00020';
+				feedback.innerText = 'No tienes la cookie. Vuelve a la landing.';
 				return;
 			}
 
 			try {
 				const result = await comprobarRespuesta(respuestaValue);
+				
 				if (result.correcta) {
 					const flagResult = await getFlag();
-					setStatus('Flag: ' + flagResult.flag);
-					return;
+					
+					feedback.style.color = 'green';
+					feedback.innerText = '¡Correcto! Aquí tienes tu flag secreta: ' + flagResult.flag;
+					flagSection.style.display = 'block';
+					flagInput.value = flagResult.flag;
+				} else {
+					feedback.style.color = '#b00020';
+					feedback.innerText = 'Respuesta incorrecta. Sigue buscando...';
+					flagSection.style.display = 'none';
 				}
-
-				setStatus('Respuesta incorrecta', true);
 			} catch (error) {
-				setStatus('Respuesta incorrecta', true);
+				feedback.style.color = '#b00020';
+				feedback.innerText = 'Respuesta incorrecta o error de conexión.';
 			}
 		});
-
 		document.getElementById('flag-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
 
-			const input = document.getElementById('flag-input');
-			const flagValue = input.value.trim();
-
-			if (!flagValue) {
-				setStatus('Introduce una flag.', true);
-				return;
-			}
-
-			try {
-				await validarCookieUsuario();
-			} catch (error) {
-				setStatus('cookien\'t', true);
-				return;
-			}
-
+			const flagValue = document.getElementById('flag-input').value.trim();
+			if (!flagValue) return;
 			try {
 				const result = await submitFlag(flagValue);
 				if (result.correcta) {
-					setStatus('Flag correcta');
-					return;
+					alert('¡Flag correcta! Puntos sumados a tu equipo.');
+					document.getElementById('flag-section').style.display = 'none';
+					document.getElementById('feedback').innerText = '¡Reto completado!';
+				} else {
+					alert('Flag incorrecta');
 				}
-
-				setStatus('Flag incorrecta', true);
 			} catch (error) {
-				setStatus('Flag incorrecta', true);
+				alert('Flag incorrecta o ya habías hecho este reto.');
 			}
 		});
 	</script>
