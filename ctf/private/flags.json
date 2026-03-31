@@ -41,5 +41,5 @@
   "parametro_extraño": {"dificultad_id": 3, "flag": "core{parametro_extraño}"},
   "tiburon_en_el_agua": {"dificultad_id": 3, "flag": "core{tiburon_en_el_agua}"},
   "xss": {"dificultad_id": 3, "flag": "core{xss}"},
-  "hardickstra": {"dificultad_id": 3, "flag": "core{hardickstra}"}
+  "hardickstra": {"dificultad_id": 3, "flag": "core{relleno_relleno_relleno}"}
 }
