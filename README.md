@@ -15,7 +15,7 @@
 #### Retos
 
 ##### Fácil
-- cesar decode
+- cesar decode [realizado]
     Les damos un texto con cifrado cesar y lo tienen que descifrar
     ID= mensaje_cifrado
 - zip bomb
@@ -88,7 +88,7 @@
 - harry potter
     Tienen que buscar la flag en una página del libro de harry potter
     ID=varita
-- morse
+- morse [realizado]
     Tienen q pasar un audio morse a texto
     ID=morsa
 - espectro audio
@@ -121,7 +121,7 @@
 #### Retos
 
 ##### Fácil
-- twitter
+- twitter [realizado]
     Tienen que buscar la flag en twitter
     ID=pajarito
 - hexacolor
@@ -163,7 +163,7 @@
     ID=tiburon_en_el_agua
 - XSS
     ns muy bien q poner en este la vd
-- grafos vengativos
+- grafos vengativos [realizado]
     encontrar la flag en un grafo de 10000 nodos (tienen que programarlo, no se puede hacer a mano)
     ID=hardickstra
 
