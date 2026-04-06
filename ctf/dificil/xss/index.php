@@ -7,23 +7,33 @@ $challengeId = 'xss';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 
-// Cookie del profesor que el XSS debe robar. httponly:false para que document.cookie la exponga.
-// El valor real se inyecta desde JS via getFlag() al cargar la página.
-setcookie('profesor_sesion', '', [
-    'expires'  => time() + 86400,
-    'path'     => '/dificil/Xss',
-    'httponly' => false,
-    'samesite' => 'Lax',
-]);
+$cookieProfesorActiva = 'ETSISI_AURA_PROFESOR';
+$tieneCookieProfesor = isset($_COOKIE['profesor_sesion'])
+    && is_string($_COOKIE['profesor_sesion'])
+    && hash_equals($cookieProfesorActiva, $_COOKIE['profesor_sesion']);
 
-$secciones = ['horarios', 'profesores', 'normativa', 'eventos', 'laboratorios'];
-$seccion   = (string) ($_GET['seccion'] ?? 'horarios');
+$info = (string) ($_GET['info'] ?? 'asignatura');
+$avisoInterno = (string) ($_GET['aviso'] ?? '');
 
-// Filtro: bloquea <script> pero no otros vectores HTML con eventos
-$seccionFiltrada = str_ireplace(['<script', '</script>'], ['', ''], $seccion);
+$asignaturas = [
+    ['slug' => 'redes-ii', 'nombre' => 'Redes II', 'grupo' => 'A1.01', 'horario' => 'Lunes y miércoles, 09:00', 'aula' => 'A1.01', 'profesor' => 'Dr. Marcos Vidal', 'correo' => 'm.vidal@etsisi.upm.es'],
+    ['slug' => 'seguridad-informatica', 'nombre' => 'Seguridad Informática', 'grupo' => 'B2.12', 'horario' => 'Martes y jueves, 11:00', 'aula' => 'B2.12', 'profesor' => 'Dra. Lucía Herrero', 'correo' => 'l.herrero@etsisi.upm.es'],
+    ['slug' => 'sistemas-distribuidos', 'nombre' => 'Sistemas Distribuidos', 'grupo' => 'A1.03', 'horario' => 'Lunes y martes, 13:00', 'aula' => 'A1.03', 'profesor' => 'D. Rafael Cano', 'correo' => 'r.cano@etsisi.upm.es'],
+    ['slug' => 'criptografia', 'nombre' => 'Criptografía', 'grupo' => 'B1.08', 'horario' => 'Martes y jueves, 15:00', 'aula' => 'B1.08', 'profesor' => 'Dra. Elena Mora', 'correo' => 'e.mora@etsisi.upm.es'],
+    ['slug' => 'laboratorio-seguridad', 'nombre' => 'Laboratorio de Seguridad', 'grupo' => 'L2.01', 'horario' => 'Lunes y miércoles, 17:00', 'aula' => 'L2.01', 'profesor' => 'D. Sergio Blanco', 'correo' => 's.blanco@etsisi.upm.es'],
+];
 
-$seccionActiva  = in_array($seccion, $secciones, true) ? $seccion : null;
-$esProyectoAura = ($seccion === 'proyecto-aura');
+$asignaturaActiva = null;
+foreach ($asignaturas as $asignatura) {
+    if ($info === $asignatura['slug']) {
+        $asignaturaActiva = $asignatura;
+        break;
+    }
+}
+
+$mostrarAsignaturas = ($info === 'asignatura');
+$mostrarDetalleAsignatura = is_array($asignaturaActiva);
+$mostrarFlag = ($info === 'aura');
 
 ?>
 <!doctype html>
@@ -76,6 +86,29 @@ $esProyectoAura = ($seccion === 'proyecto-aura');
             padding: 2rem;
             min-height: 300px;
         }
+        .action-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 160px;
+            padding: 0.65rem 1rem;
+            border: 1px solid #555;
+            border-radius: 4px;
+            color: #e5e7eb;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.03);
+            transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+        }
+        .action-link:hover {
+            color: #00ff99;
+            border-color: #00ff99;
+            background: rgba(0, 255, 153, 0.05);
+        }
+        .action-link.active {
+            color: #00ff99;
+            border-color: #00ff99;
+            background: rgba(0, 255, 153, 0.08);
+        }
         .table-intranet th { color: #00ff99; border-color: #333; }
         .table-intranet td { color: #ccc;    border-color: #222; }
         .restricted-badge {
@@ -93,6 +126,12 @@ $esProyectoAura = ($seccion === 'proyecto-aura');
 </head>
 <body class="body-bg">
 
+<script>
+    function activarCookie() {
+        document.cookie = 'profesor_sesion=ETSISI_AURA_PROFESOR; path=/dificil/xss; SameSite=Lax';
+    }
+</script>
+
 <div class="intranet-header">
     <div class="container">
         <div class="intranet-logo">[ ETSISI // INTRANET ]</div>
@@ -103,140 +142,94 @@ $esProyectoAura = ($seccion === 'proyecto-aura');
     <div class="container py-3">
         <p class="mb-0 small" style="color:#adb5bd;">
             <span style="color:#00ff99; font-family:'VT323',monospace; font-size:1.1rem;">// MISIÓN</span>
-            &nbsp; el portal interno de la ETSISI guarda información clasificada
-            sobre el <strong style="color:#fff">Proyecto AURA</strong>. El sistema filtra a los intrusos
-            por cookie de sesión de profesor. Encuentra la manera de robar esa cookie y obtén la flag.
+            &nbsp; el portal interno de la ETSISI expone el plan docente del departamento.
+            El acceso a la parte clasificada depende de la cookie de sesión del profesor.
         </p>
     </div>
 </div>
 
 <main class="container pb-5">
 
-    <nav class="mb-4">
-        <ul class="nav nav-intranet border-bottom border-secondary">
-            <?php foreach ($secciones as $s): ?>
-                <li class="nav-item">
-                    <a class="nav-link <?= $seccionActiva === $s ? 'active' : '' ?>"
-                       href="?seccion=<?= htmlspecialchars($s, ENT_QUOTES, 'UTF-8') ?>">
-                        <?= htmlspecialchars(ucfirst($s), ENT_QUOTES, 'UTF-8') ?>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-lg-8">
+            <div class="border border-secondary rounded-3 p-4 h-100">
+                <h2 class="h5 fw-bold mb-2" style="color:#00ff99">Navegación interna</h2>
+                <p class="text-muted small mb-3">Usa los botones para moverte por el portal.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <?php foreach ($asignaturas as $asignatura): ?>
+                        <a class="action-link <?= ($info === $asignatura['slug']) ? 'active' : '' ?>" href="?info=<?= htmlspecialchars($asignatura['slug'], ENT_QUOTES, 'UTF-8') ?>">
+                            <?= htmlspecialchars($asignatura['nombre'], ENT_QUOTES, 'UTF-8') ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="border border-secondary rounded-3 p-4 h-100">
+                <h2 class="h6 fw-bold mb-2" style="color:#adb5bd">Aviso</h2>
+                <p class="text-muted small mb-2">Nos hemos dejado la función activarCookie() disponible! Hay que corregirlo cuanto antes!</p>
+                <p class="text-muted small mb-0">También hay que arreglar el botón de <span style="color:#ff9944">AURA</span>.</p>
+            </div>
+        </div>
+    </div>
 
     <div class="content-panel mb-4">
 
-        <?php if ($seccionActiva === 'horarios'): ?>
-            <h2 class="h4 fw-bold mb-3" style="color:#00ff99">Horarios — Curso 2025/2026</h2>
-            <p class="text-muted small mb-3">Semestre B &mdash; Actualizado: 03/02/2026</p>
-            <table class="table table-intranet table-sm">
-                <thead>
-                    <tr><th>Hora</th><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>09:00</td><td>Redes II (A1.01)</td><td>&mdash;</td><td>Redes II (A1.01)</td><td>&mdash;</td><td>Lab. Redes (L3.04)</td></tr>
-                    <tr><td>11:00</td><td>&mdash;</td><td>Seg. Informática (B2.12)</td><td>&mdash;</td><td>Seg. Informática (B2.12)</td><td>&mdash;</td></tr>
-                    <tr><td>13:00</td><td>Sistemas Dist. (A1.03)</td><td>Sistemas Dist. (A1.03)</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
-                    <tr><td>15:00</td><td>&mdash;</td><td>Criptografía (B1.08)</td><td>&mdash;</td><td>Criptografía (B1.08)</td><td>&mdash;</td></tr>
-                    <tr><td>17:00</td><td>Lab. Seg. (L2.01)</td><td>&mdash;</td><td>Lab. Seg. (L2.01)</td><td>&mdash;</td><td>&mdash;</td></tr>
-                </tbody>
-            </table>
+        <?php if ($mostrarAsignaturas): ?>
+            <h2 class="h4 fw-bold mb-3" style="color:#00ff99">Asignaturas disponibles</h2>
+            <p class="text-muted small mb-0">Selecciona una asignatura en los botones superiores para ver su profesor y correo.</p>
 
-        <?php elseif ($seccionActiva === 'profesores'): ?>
-            <h2 class="h4 fw-bold mb-3" style="color:#00ff99">Directorio de Profesorado</h2>
-            <p class="text-muted small mb-3">Departamento de Sistemas Informáticos</p>
-            <table class="table table-intranet table-sm">
-                <thead>
-                    <tr><th>Nombre</th><th>Área</th><th>Despacho</th><th>Correo</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>Dr. Marcos Vidal</td><td>Seguridad de Redes</td><td>D2.14</td><td>m.vidal@etsisi.upm.es</td></tr>
-                    <tr><td>Dra. Lucía Herrero</td><td>Criptografía Aplicada</td><td>D2.09</td><td>l.herrero@etsisi.upm.es</td></tr>
-                    <tr><td>D. Rafael Cano</td><td>Sistemas Distribuidos</td><td>D1.22</td><td>r.cano@etsisi.upm.es</td></tr>
-                    <tr><td>Dra. Elena Mora</td><td>Investigación — <span class="restricted-badge">AURA</span></td><td>D3.01</td><td>e.mora@etsisi.upm.es</td></tr>
-                    <tr><td>D. Sergio Blanco</td><td>Redes de Área Local</td><td>D1.07</td><td>s.blanco@etsisi.upm.es</td></tr>
-                </tbody>
-            </table>
+            <?php if ($avisoInterno !== ''): ?>
+                <div class="border border-secondary rounded p-3 mt-4">
+                    <h3 class="h6 fw-bold mb-2" style="color:#adb5bd">Comunicado interno</h3>
+                    <p class="text-muted small mb-0"><?= $avisoInterno ?></p>
+                </div>
+            <?php endif; ?>
 
-        <?php elseif ($seccionActiva === 'normativa'): ?>
-            <h2 class="h4 fw-bold mb-3" style="color:#00ff99">Normativa del Portal</h2>
-            <p class="text-muted small mb-3">Versión 4.1 &mdash; Aprobada por Junta de Escuela el 15/09/2025</p>
-            <ul class="text-secondary" style="line-height:2">
-                <li>El acceso es exclusivo para personal docente e investigador con sesión activa.</li>
-                <li>Cada usuario dispone de una <strong style="color:#ccc">cookie de sesión</strong> única (<code>profesor_sesion</code>) que identifica su identidad en el sistema.</li>
-                <li>Queda prohibida la divulgación de credenciales o tokens de sesión a terceros.</li>
-                <li>Las secciones marcadas con <span class="restricted-badge">ACCESO RESTRINGIDO</span> requieren permisos adicionales.</li>
-                <li>Cualquier acceso indebido será registrado y comunicado al responsable de seguridad del centro.</li>
-            </ul>
-
-        <?php elseif ($seccionActiva === 'eventos'): ?>
-            <h2 class="h4 fw-bold mb-3" style="color:#00ff99">Eventos del Campus</h2>
-            <p class="text-muted small mb-3">Próximas actividades &mdash; Febrero / Marzo 2026</p>
-            <div class="d-flex flex-column gap-3">
-                <div class="border border-secondary rounded p-3">
-                    <div class="small text-muted mb-1">14 Feb 2026 &mdash; Aula Magna</div>
-                    <strong>Jornada de Ciberseguridad ETSISI 2026</strong>
-                    <p class="text-muted small mt-1 mb-0">Ponencias sobre amenazas actuales, CTF interno y talleres de pentesting.</p>
-                </div>
-                <div class="border border-secondary rounded p-3">
-                    <div class="small text-muted mb-1">21 Feb 2026 &mdash; Laboratorio L3</div>
-                    <strong>Taller: Introducción a Wireshark y análisis de tráfico</strong>
-                    <p class="text-muted small mt-1 mb-0">Sesión práctica de 3 horas. Plazas limitadas a 20 asistentes.</p>
-                </div>
-                <div class="border border-secondary rounded p-3">
-                    <div class="small text-muted mb-1">05 Mar 2026 &mdash; Sala de reuniones D1</div>
-                    <strong>Reunión de coordinación de investigación — Departamento SI</strong>
-                    <p class="text-muted small mt-1 mb-0">Presentación de avances en proyectos activos.</p>
-                </div>
+        <?php elseif ($mostrarDetalleAsignatura): ?>
+            <h2 class="h4 fw-bold mb-3" style="color:#00ff99"><?= htmlspecialchars($asignaturaActiva['nombre'], ENT_QUOTES, 'UTF-8') ?></h2>
+            <div class="table-responsive mb-4">
+                <table class="table table-intranet table-sm">
+                    <thead>
+                        <tr><th>Grupo</th><th>Horario</th><th>Aula</th><th>Profesor</th><th>Correo</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?= htmlspecialchars($asignaturaActiva['grupo'], ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($asignaturaActiva['horario'], ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($asignaturaActiva['aula'], ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($asignaturaActiva['profesor'], ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($asignaturaActiva['correo'], ENT_QUOTES, 'UTF-8') ?></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+            <p class="text-muted small mb-0">Puedes cambiar de asignatura usando los botones superiores.</p>
 
-        <?php elseif ($seccionActiva === 'laboratorios'): ?>
-            <h2 class="h4 fw-bold mb-3" style="color:#00ff99">Laboratorios</h2>
-            <p class="text-muted small mb-3">Planta 2 y 3 — Edificio A</p>
-            <table class="table table-intranet table-sm mb-4">
-                <thead>
-                    <tr><th>Lab</th><th>Nombre</th><th>Capacidad</th><th>Estado</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>L2.01</td><td>Lab. Seguridad</td><td>24 puestos</td><td><span class="text-success">Operativo</span></td></tr>
-                    <tr><td>L2.04</td><td>Lab. Redes</td><td>30 puestos</td><td><span class="text-success">Operativo</span></td></tr>
-                    <tr><td>L3.01</td><td>Lab. Sistemas Distribuidos</td><td>20 puestos</td><td><span class="text-success">Operativo</span></td></tr>
-                    <tr><td>L3.04</td><td>Lab. Criptografía</td><td>16 puestos</td><td><span class="text-warning">Mantenimiento</span></td></tr>
-                    <tr><td>L3.09</td><td>Lab. Investigación Avanzada</td><td>—</td><td><span class="restricted-badge">RESTRINGIDO</span></td></tr>
-                </tbody>
-            </table>
-            <div class="border border-secondary rounded p-3">
-                <h3 class="h6 fw-bold mb-2" style="color:#adb5bd">Proyectos de investigación activos</h3>
-                <ul class="text-muted small mb-0" style="line-height:2">
-                    <li><strong style="color:#ccc">ProtoSec</strong> — Análisis de vulnerabilidades en protocolos industriales.</li>
-                    <li><strong style="color:#ccc">RedGuard</strong> — Detección de intrusiones basada en aprendizaje automático.</li>
-                    <li><strong style="color:#ccc">Proyecto AURA</strong> — Clasificado. Acceso solo para personal autorizado del Departamento SI.</li>
-                </ul>
-            </div>
-
-        <?php elseif ($esProyectoAura): ?>
+        <?php elseif ($mostrarFlag): ?>
             <div class="text-center py-4">
                 <h2 class="h4 fw-bold mt-3" style="color:#ff4444">ACCESO RESTRINGIDO</h2>
-                <p class="text-muted mt-3 mb-1">Esta sección contiene información clasificada.</p>
-                <p class="text-muted mb-3">
-                    El sistema verifica la identidad mediante la cookie de sesión
-                    <code>profesor_sesion</code>. Solo el profesorado autorizado con
-                    dicha cookie activa puede acceder al contenido del
-                    <strong style="color:#ccc">Proyecto AURA</strong>.
-                </p>
-                <p class="text-muted small">
-                    Si eres investigador del proyecto, asegúrate de tener la cookie correcta
-                    en tu navegador antes de intentar acceder.
-                </p>
+                <?php if ($tieneCookieProfesor): ?>
+                    <p class="text-muted mt-3 mb-1">Esta sección contiene información clasificada.</p>
+                    <p class="text-muted mb-3">Contenido interno del profesorado.</p>
+                    <p class="text-muted mb-0">
+                        La flag es: <strong id="aura-flag" style="color:#ccc">Cargando...</strong>
+                    </p>
+                <?php else: ?>
+                    <p class="text-muted mt-3 mb-1">PROYECTO DE INVESTIGACIÓN AURA</p>
+                    <p class="text-muted mb-0">Área reservada para personal autorizado.</p>
+                <?php endif; ?>
             </div>
 
         <?php else: ?>
-            <p class="text-muted mb-1">
-                La sección <strong style="color:#ff9944"><?= $seccionFiltrada ?></strong>
-                no existe en este portal.
-            </p>
-            <p class="text-muted small">Comprueba que la URL es correcta o usa la navegación superior.</p>
+            <div class="text-center py-4">
+                <h2 class="h4 fw-bold mt-3" style="color:#ff4444">ACCESO NO DISPONIBLE</h2>
+                <p class="text-muted mt-3 mb-1">
+                    La sección <strong style="color:#ff9944"><?= $info ?></strong>
+                    no existe en este portal.
+                </p>
+                <p class="text-muted small">Comprueba la URL.</p>
+            </div>
         <?php endif; ?>
 
     </div>
@@ -250,7 +243,7 @@ $esProyectoAura = ($seccion === 'proyecto-aura');
                     <label for="flag-input" class="form-label mb-0">Flag</label>
                     <input id="flag-input" name="flag" type="text"
                            class="form-control bg-dark text-white border-secondary"
-                           required autocomplete="off" placeholder="CTF{...}" />
+                           required autocomplete="off" placeholder="core{...}" />
                     <button type="submit" class="btn btn-outline-light mt-2">Enviar flag</button>
                 </form>
             </div>
@@ -265,6 +258,8 @@ $esProyectoAura = ($seccion === 'proyecto-aura');
     const BACKEND_URL  = <?php echo json_encode($backendUrl,  JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
     const CHALLENGE_ID = <?php echo json_encode($challengeId, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
     const CSRF_TOKEN   = <?php echo json_encode($csrfToken,   JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
+    const IS_AURA_VIEW = <?php echo json_encode($mostrarFlag, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
+    const HAS_PROFESSOR_COOKIE = <?php echo json_encode($tieneCookieProfesor, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
 
     async function postBackend(payload) {
         const response = await fetch(BACKEND_URL, {
@@ -281,21 +276,14 @@ $esProyectoAura = ($seccion === 'proyecto-aura');
         try {
             data = await response.json();
         } catch (error) {
-            throw new Error('El backend no responde');
+            throw new Error('backend murió');
         }
 
         if (!response.ok || !data.ok) {
-            throw new Error(data.error || 'Error del backend');
+            throw new Error(data.error || 'backend murió');
         }
 
         return data;
-    }
-
-    async function getFlag() {
-        return postBackend({
-            action: 'get_flag',
-            id: CHALLENGE_ID,
-        });
     }
 
     async function validarCookieUsuario() {
@@ -310,16 +298,28 @@ $esProyectoAura = ($seccion === 'proyecto-aura');
         });
     }
 
+    async function cargarFlagAura() {
+        const flagNode = document.getElementById('aura-flag');
+        if (!flagNode || !IS_AURA_VIEW || !HAS_PROFESSOR_COOKIE) {
+            return;
+        }
+
+        try {
+            const result = await postBackend({
+                action: 'get_flag',
+                reto: CHALLENGE_ID,
+            });
+            flagNode.textContent = String(result.flag || 'N/D');
+        } catch {
+            flagNode.textContent = 'No disponible';
+        }
+    }
+
     function setStatus(message, isError = false) {
         const status = document.getElementById('status');
         status.textContent = message;
         status.style.color = isError ? '#b00020' : '#0a6b0a';
     }
-
-    // Establece la cookie del profesor con la flag real al cargar la página.
-    getFlag().then(result => {
-        document.cookie = `profesor_sesion=${result.flag}; path=/dificil/Xss; samesite=Lax`;
-    }).catch(() => {});
 
     document.getElementById('flag-form').addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -333,7 +333,7 @@ $esProyectoAura = ($seccion === 'proyecto-aura');
         try {
             await validarCookieUsuario();
         } catch {
-            setStatus('No tienes cookie de equipo. Vuelve a la landing.', true);
+            setStatus('cookien\'t', true);
             return;
         }
 
@@ -352,6 +352,8 @@ $esProyectoAura = ($seccion === 'proyecto-aura');
             setStatus('Flag incorrecta.', true);
         }
     });
+
+    cargarFlagAura();
 </script>
 </body>
 </html>

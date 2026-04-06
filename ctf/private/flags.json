@@ -40,6 +40,6 @@
   "juego_imposible": {"dificultad_id": 3, "flag": "core{juego_imposible}"},
   "parametro_extraño": {"dificultad_id": 3, "flag": "core{parametro_extraño}"},
   "tiburon_en_el_agua": {"dificultad_id": 3, "flag": "core{w1r3sh4rk}"},
-  "xss": {"dificultad_id": 3, "flag": "core{xss}"},
+  "xss": {"dificultad_id": 3, "flag": "core{aura_secreta}"},
   "hardickstra": {"dificultad_id": 3, "flag": "core{relleno_relleno_relleno}"}
 }
