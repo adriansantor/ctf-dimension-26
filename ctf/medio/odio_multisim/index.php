@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 require __DIR__ . '/../../csrf.php';
 
 $challengeId = 'odio_multisim';
@@ -23,7 +22,7 @@ $csrfToken = getCtfCsrfToken();
 			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Odio Multisim</h1>
 			<p class="text-center" style="font-size: 1.5rem;">Estamos intentando encender la bombilla de la habitación, pero el panel de control ha sido saboteado. Solo una combinación específica de señales permitirá que la luz vuelva. \n**Misión:** ¿Qué combinación de entradas ($A_0, A_1, A_2, A_3$) permite que se encienda la luz **Y**?</p>
 			<div class="text-center mt-3">
-				<a href="odio_multisim.ms14" download class="btn btn-outline-light btn-lg">Descargar Archivo Multisim</a>
+				<a href="/medio/odio_multisim/odio_multisim.ms14" download class="btn btn-outline-light btn-lg">Descargar Archivo Multisim</a>
 			</div>
 		</div>
 
@@ -33,7 +32,7 @@ $csrfToken = getCtfCsrfToken();
 					<h2 class="h3 fw-bold mb-3">Enviar flag</h2>
 					<form id="flag-form" class="d-flex flex-column gap-2">
 						<label for="flag-input" class="form-label mb-0">Flag</label>
-						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" placeholder="flag{...}" required autocomplete="off" />
+						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" placeholder="core{...}" required autocomplete="off" />
 						<button type="submit" class="btn btn-outline-light mt-2">Comprobar flag</button>
 					</form>
 				</div>
@@ -106,37 +105,40 @@ $csrfToken = getCtfCsrfToken();
 			status.style.color = isError ? '#b00020' : '#0a6b0a';
 		}
 
-		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
-			event.preventDefault();
+		const respuestaForm = document.getElementById('respuesta-form');
+		if (respuestaForm) {
+			respuestaForm.addEventListener('submit', async (event) => {
+				event.preventDefault();
 
-			const input = document.getElementById('respuesta-input');
-			const respuestaValue = input.value.trim();
+				const input = document.getElementById('respuesta-input');
+				const respuestaValue = input.value.trim();
 
-			if (!respuestaValue) {
-				setStatus('Introduce una respuesta.', true);
-				return;
-			}
-
-			try {
-				await validarCookieUsuario();
-			} catch (error) {
-				setStatus('cookien\'t', true);
-				return;
-			}
-
-			try {
-				const result = await comprobarRespuesta(respuestaValue);
-				if (result.correcta) {
-					const flagResult = await getFlag();
-					setStatus('Flag: ' + flagResult.flag);
+				if (!respuestaValue) {
+					setStatus('Introduce una respuesta.', true);
 					return;
 				}
 
-				setStatus('Respuesta incorrecta', true);
-			} catch (error) {
-				setStatus('Respuesta incorrecta', true);
-			}
-		});
+				try {
+					await validarCookieUsuario();
+				} catch (error) {
+					setStatus('cookien\'t', true);
+					return;
+				}
+
+				try {
+					const result = await comprobarRespuesta(respuestaValue);
+					if (result.correcta) {
+						const flagResult = await getFlag();
+						setStatus('Flag: ' + flagResult.flag);
+						return;
+					}
+
+					setStatus('Respuesta incorrecta', true);
+				} catch (error) {
+					setStatus('Respuesta incorrecta', true);
+				}
+			});
+		}
 
 		document.getElementById('flag-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
@@ -158,8 +160,12 @@ $csrfToken = getCtfCsrfToken();
 
 			try {
 				const result = await submitFlag(flagValue);
+				if (result.ya_hecha) {
+					setStatus('Ya has conseguido esta flag, no se añadiran puntos', true);
+					return;
+				}
 				if (result.correcta) {
-					setStatus('Flag correcta');
+					setStatus('Flag correcta! +' + result.puntos_sumados + ' puntos conseguidos');
 					return;
 				}
 

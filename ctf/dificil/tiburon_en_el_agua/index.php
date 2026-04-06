@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 require __DIR__ . '/../../csrf.php';
 
 $challengeId = 'tiburon_en_el_agua';
@@ -23,7 +22,7 @@ $csrfToken = getCtfCsrfToken();
 			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Tiburón en el agua</h1>
 			<p class="text-center" style="font-size: 1.5rem;">Mientras intentábamos pescar un tiburón, se nos han caído unos paquetes de datos al agua. El mar está revuelto y lleno de ruido digital. \n**Misión:** Recupera la captura de paquetes (.pcapng) y busca entre el tráfico.</p>
 			<div class="text-center mt-3">
-				<a href="tiburon_en_el_agua.pcapng" download class="btn btn-outline-light btn-lg">Descargar Archivo de Captura</a>
+				<a href="/dificil/tiburon_en_el_agua/tiburon_en_el_agua.pcapng" download class="btn btn-outline-light btn-lg">Descargar Archivo de Captura</a>
 			</div>
 		</div>
 
@@ -106,37 +105,40 @@ $csrfToken = getCtfCsrfToken();
 			status.style.color = isError ? '#b00020' : '#0a6b0a';
 		}
 
-		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
-			event.preventDefault();
+		const respuestaForm = document.getElementById('respuesta-form');
+		if (respuestaForm) {
+			respuestaForm.addEventListener('submit', async (event) => {
+				event.preventDefault();
 
-			const input = document.getElementById('respuesta-input');
-			const respuestaValue = input.value.trim();
+				const input = document.getElementById('respuesta-input');
+				const respuestaValue = input.value.trim();
 
-			if (!respuestaValue) {
-				setStatus('Introduce una respuesta.', true);
-				return;
-			}
-
-			try {
-				await validarCookieUsuario();
-			} catch (error) {
-				setStatus('cookien\'t', true);
-				return;
-			}
-
-			try {
-				const result = await comprobarRespuesta(respuestaValue);
-				if (result.correcta) {
-					const flagResult = await getFlag();
-					setStatus('Flag: ' + flagResult.flag);
+				if (!respuestaValue) {
+					setStatus('Introduce una respuesta.', true);
 					return;
 				}
 
-				setStatus('Respuesta incorrecta', true);
-			} catch (error) {
-				setStatus('Respuesta incorrecta', true);
-			}
-		});
+				try {
+					await validarCookieUsuario();
+				} catch (error) {
+					setStatus('cookien\'t', true);
+					return;
+				}
+
+				try {
+					const result = await comprobarRespuesta(respuestaValue);
+					if (result.correcta) {
+						const flagResult = await getFlag();
+						setStatus('Flag: ' + flagResult.flag);
+						return;
+					}
+
+					setStatus('Respuesta incorrecta', true);
+				} catch (error) {
+					setStatus('Respuesta incorrecta', true);
+				}
+			});
+		}
 
 		document.getElementById('flag-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
@@ -158,8 +160,12 @@ $csrfToken = getCtfCsrfToken();
 
 			try {
 				const result = await submitFlag(flagValue);
+				if (result.ya_hecha) {
+					setStatus('Ya has conseguido esta flag, no se añadiran puntos', true);
+					return;
+				}
 				if (result.correcta) {
-					setStatus('Flag correcta');
+					setStatus('Flag correcta! +' + result.puntos_sumados + ' puntos conseguidos');
 					return;
 				}
 
