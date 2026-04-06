@@ -20,7 +20,7 @@ $csrfToken = getCtfCsrfToken();
 	<main class="container py-4">
 		<div class="row align-center g-4 mb-4">
 			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Tiburón en el agua</h1>
-			<p class="text-center" style="font-size: 1.5rem;">Mientras intentábamos pescar un tiburón, se nos han caído unos paquetes de datos al agua. El mar está revuelto y lleno de ruido digital. \n**Misión:** Recupera la captura de paquetes (.pcapng) y busca entre el tráfico.</p>
+			<p class="text-center" style="font-size: 1.5rem;">Mientras intentábamos pescar un tiburón, se nos han caído unos paquetes de datos al agua. El mar está revuelto y lleno de ruido digital.<br><strong>Misión:</strong> Recupera la captura de paquetes (.pcapng) y busca entre el tráfico.</p>
 			<div class="text-center mt-3">
 				<a href="/dificil/tiburon_en_el_agua/tiburon_en_el_agua.pcapng" download class="btn btn-outline-light btn-lg">Descargar Archivo de Captura</a>
 			</div>
@@ -32,7 +32,7 @@ $csrfToken = getCtfCsrfToken();
 					<h2 class="h3 fw-bold mb-3">Enviar flag</h2>
 					<form id="flag-form" class="d-flex flex-column gap-2">
 						<label for="flag-input" class="form-label mb-0">Flag</label>
-						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" placeholder="core{...}" required autocomplete="off" />
 						<button type="submit" class="btn btn-outline-light mt-2">Comprobar flag</button>
 					</form>
 				</div>

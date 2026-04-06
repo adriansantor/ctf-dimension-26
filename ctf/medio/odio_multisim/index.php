@@ -20,7 +20,7 @@ $csrfToken = getCtfCsrfToken();
 	<main class="container py-4">
 		<div class="row align-center g-4 mb-4">
 			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Odio Multisim</h1>
-			<p class="text-center" style="font-size: 1.5rem;">Estamos intentando encender la bombilla de la habitación, pero el panel de control ha sido saboteado. Solo una combinación específica de señales permitirá que la luz vuelva. \n**Misión:** ¿Qué combinación de entradas ($A_0, A_1, A_2, A_3$) permite que se encienda la luz **Y**?</p>
+			<p class="text-center" style="font-size: 1.5rem;">Estamos intentando encender la bombilla de la habitación, pero el panel de control ha sido saboteado. Solo una combinación específica de señales permitirá que la luz vuelva.<br><strong>Misión:</strong> ¿Qué combinación de entradas (A<sub>0</sub>, A<sub>1</sub>, A<sub>2</sub>, A<sub>3</sub>) permite que se encienda la luz <strong>Y</strong>?</p>
 			<div class="text-center mt-3">
 				<a href="/medio/odio_multisim/odio_multisim.ms14" download class="btn btn-outline-light btn-lg">Descargar Archivo Multisim</a>
 			</div>
