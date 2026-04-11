@@ -22,7 +22,7 @@ $csrfToken = getCtfCsrfToken();
 			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Archivos de Epstein</h1>
 			<p class="text-center" style="font-size: 1.5rem;">Te encuentras ante un volcado de datos de alta prioridad. Tu misión es analizar las entrañas de este sistema, conectar los puntos y desvelar el secreto que CORE ha intentado enterrar.<br><strong>Misión:</strong> Navega por los directorios, ignora los callejones sin salida y encuentra la forma de acceder al contenido restringido.</p>
 			<div class="text-center mt-3">
-				<a href="/facil/epstein_files/download.php" class="btn btn-outline-light btn-lg">Descargar Archivo ZIP</a>
+				<a href="/facil/epstein_files/epstein_files.zip" class="btn btn-outline-light btn-lg">Descargar Archivo ZIP</a>
 			</div>
 		</div>
 
