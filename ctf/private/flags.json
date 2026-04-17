@@ -7,9 +7,9 @@
   "tu_madre_es_tan_gorda": {"dificultad_id": 1, "flag": "core{tu_madre_es_tan_gorda}"},
   "torre_de_babel": {"dificultad_id": 1, "flag": "core{torre_de_babel}"},
   "plain": {"dificultad_id": 1, "flag": "core{plain}"},
-  "pajarito": {"dificultad_id": 1, "flag": "core{pajarito}"},
-  "colorido": {"dificultad_id": 1, "flag": "core{colorido}"},
-  "epstein_files": {"dificultad_id": 1, "flag": "core{epstein_files}"},
+  "epstein_files": {"dificultad_id": 1, "flag": "core{estudia_los_mandamientos}"},
+  "pajarito": {"dificultad_id": 1, "flag": "core{haterdobbylocooooo}"},
+  "colorido": {"dificultad_id": 1, "flag": "core{c0l0r1n3s}"},
   "rootoor": {"dificultad_id": 1, "flag": "core{rootoor}"},
   "comentarios_discretos": {"dificultad_id": 1, "flag": "core{comentarios_discretos}"},
   "mucho_texto": {"dificultad_id": 1, "flag": "core{mucho_texto}"},
@@ -28,7 +28,7 @@
   "fantasma": {"dificultad_id": 2, "flag": "core{fantasma}"},
   "dijsakjdtra": {"dificultad_id": 2, "flag": "core{dijsakjdtra}"},
   "tesoro": {"dificultad_id": 2, "flag": "core{tesoro}"},
-  "odio_multisim": {"dificultad_id": 2, "flag": "core{odio_multisim}"},
+  "odio_multisim": {"dificultad_id": 2, "flag": "core{11011}"},
   "metelo_en_arroz": {"dificultad_id": 2, "flag": "core{metelo_en_arroz}"},
 
   "telescopio": {"dificultad_id": 3, "flag": "core{telescopio}"},
@@ -39,7 +39,7 @@
   "fuerte_ataque": {"dificultad_id": 3, "flag": "core{fuerte_ataque}"},
   "juego_imposible": {"dificultad_id": 3, "flag": "core{juego_imposible}"},
   "parametro_extraño": {"dificultad_id": 3, "flag": "core{parametro_extraño}"},
-  "tiburon_en_el_agua": {"dificultad_id": 3, "flag": "core{tiburon_en_el_agua}"},
-  "xss": {"dificultad_id": 3, "flag": "core{xss}"},
-  "hardickstra": {"dificultad_id": 3, "flag": "core{hardickstra}"}
+  "tiburon_en_el_agua": {"dificultad_id": 3, "flag": "core{w1r3sh4rk}"},
+  "xss": {"dificultad_id": 3, "flag": "core{aura_secreta}"},
+  "hardickstra": {"dificultad_id": 3, "flag": "core{relleno_relleno_relleno}"}
 }

@@ -33,11 +33,11 @@
   },
   {
     "id_reto": "pajarito",
-    "respuesta": "PLACEHOLDER"
+    "respuesta": "Dobby"
   },
   {
     "id_reto": "colorido",
-    "respuesta": "PLACEHOLDER"
+    "respuesta": "#760001"
   },
   {
     "id_reto": "epstein_files",
@@ -157,10 +157,10 @@
   },
   {
     "id_reto": "xss",
-    "respuesta": "PLACEHOLDER"
+    "respuesta": "sala-aura"
   },
   {
     "id_reto": "hardickstra",
-    "respuesta": "PLACEHOLDER"
+    "respuesta": "ahoraespersonal"
   }
 ]
