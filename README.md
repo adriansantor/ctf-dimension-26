@@ -15,7 +15,7 @@
 #### Retos
 
 ##### Fácil
-- cesar decode [realizado]
+- cesar decode
     Les damos un texto con cifrado cesar y lo tienen que descifrar
     ID= mensaje_cifrado
 - zip bomb
@@ -88,7 +88,7 @@
 - harry potter
     Tienen que buscar la flag en una página del libro de harry potter
     ID=varita
-- morse [realizado]
+- morse
     Tienen q pasar un audio morse a texto
     ID=morsa
 - espectro audio
@@ -121,13 +121,13 @@
 #### Retos
 
 ##### Fácil
-- twitter [realizado]
+- twitter
     Tienen que buscar la flag en twitter
     ID=pajarito
-- hexacolor [realizado]
+- hexacolor
     La flag es el código hexa de un color
     ID=colorido
-- laberinto [realizado*]
+- laberinto
     Tienen que encontrar la flag en unas carpetas
     ID=epstein_files
 - creds default
@@ -150,7 +150,7 @@
 - coords gMaps
     Tienen que hacer algo con unas coordenadas de Maps, o se las dais con el nombre de un sitio o viceversa, y eso es la flag
     ID=tesoro
-- multisim [realizado]
+- multisim
     Les damos un circuito combinacional con un multiplexor de 32 entradas, y tienen que escribir la entrada necesaria para una salida específica
     ID=odio_multisim
 - parcial fundamentos de seguridad
@@ -158,12 +158,12 @@
     ID=metelo_en_arroz
 
 ##### Difícil
-- wireshark [realizado]
+- wireshark
     Tienen q extraer la flag de una captura de wireshark
     ID=tiburon_en_el_agua
-- XSS [realizado]
+- XSS
     ns muy bien q poner en este la vd
-- grafos vengativos [realizado]
+- grafos vengativos
     encontrar la flag en un grafo de 10000 nodos (tienen que programarlo, no se puede hacer a mano)
     ID=hardickstra
 

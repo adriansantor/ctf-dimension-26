@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Sync remote branches with main safely
+      - name: Sync remote branches to main
         env:
           MAIN_BRANCH: main
           EXCLUDED_BRANCHES: main
@@ -62,37 +62,10 @@ jobs:
               continue
             fi
 
-            branch_ref="origin/${branch}"
-            ahead_count="$(git rev-list --count "origin/${MAIN_BRANCH}..${branch_ref}")"
-            behind_count="$(git rev-list --count "${branch_ref}..origin/${MAIN_BRANCH}")"
-
-            echo "Branch ${branch}: ahead=${ahead_count}, behind=${behind_count}"
-
-            if [[ "${ahead_count}" -eq 0 ]]; then
-              if [[ "${behind_count}" -eq 0 ]]; then
-                echo "${branch} is already up to date with ${MAIN_BRANCH}."
-                continue
-              fi
-
-              echo "${branch} has no own commits; fast-forwarding to ${MAIN_BRANCH}."
-              if git push origin "${main_sha}:refs/heads/${branch}"; then
-                echo "Fast-forwarded ${branch}."
-              else
-                echo "Could not update ${branch} (possibly branch protection). Continuing..."
-              fi
-              continue
-            fi
-
-            echo "${branch} has own commits; attempting to merge ${MAIN_BRANCH} into ${branch}."
-            git checkout -B "${branch}" "${branch_ref}"
-            if git merge --no-ff --no-edit "origin/${MAIN_BRANCH}"; then
-              if git push origin "HEAD:refs/heads/${branch}"; then
-                echo "Merged ${MAIN_BRANCH} into ${branch} and pushed successfully."
-              else
-                echo "Merge succeeded but push failed for ${branch} (possibly branch protection)."
-              fi
+            echo "Syncing ${branch} to ${MAIN_BRANCH}"
+            if git push --force-with-lease origin "${main_sha}:refs/heads/${branch}"; then
+              echo "Synced ${branch}"
             else
-              echo "Merge conflict while syncing ${branch}; keeping branch unchanged."
-              git merge --abort || true
+              echo "Could not sync ${branch} (possibly branch protection). Continuing..."
             fi
           done

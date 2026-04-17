@@ -72,7 +72,7 @@ function loadUserChallengeState(string $csvPath, string $nombreB64): array
         }
 
         foreach ($header as $index => $column) {
-            if (!is_string($column) || $column === '' || in_array($column, ['nombre_b64', 'password_hash', 'dif', 'puntos'], true)) {
+            if (!is_string($column) || $column === '' || in_array($column, ['nombre_b64', 'dif', 'puntos'], true)) {
                 continue;
             }
 
@@ -255,16 +255,12 @@ if (isset($_GET['data'])) {
             <div class="row mb-4 gy-4">
                 <div class="border border-secondary rounded-3 p-4 h-100">
                     <h2 class="fw-bold mb-2">Introducir usuario</h2>
-                    <p class="text-muted mb-3">Inicia sesión y asigna cookie <code>usuario_b64</code></p>
+                    <p class="text-muted mb-3">Asigna cookie <code>usuario_b64</code></p>
                     <form id="introducir-form" class="d-flex flex-column gap-2">
                         <label for="introducir-usuario" class="form-label mb-0">Usuario</label>
                         <input id="introducir-usuario" name="usuario" type="text"
                                class="form-control bg-dark text-white border-secondary"
                                required autocomplete="off">
-                        <label for="introducir-password" class="form-label mb-0">Contraseña</label>
-                        <input id="introducir-password" name="password" type="password"
-                               class="form-control bg-dark text-white border-secondary"
-                               required autocomplete="current-password">
                         <button type="submit" class="btn btn-outline-light mt-2">Introducir usuario</button>
                     </form>
                 </div>
@@ -279,10 +275,6 @@ if (isset($_GET['data'])) {
                         <input id="crear-usuario" name="usuario" type="text"
                                class="form-control bg-dark text-white border-secondary"
                                required autocomplete="off">
-                        <label for="crear-password" class="form-label mb-0">Contraseña</label>
-                        <input id="crear-password" name="password" type="password"
-                               class="form-control bg-dark text-white border-secondary"
-                               required autocomplete="new-password">
                         <label for="crear-dificultad" class="form-label mb-0">Dificultad</label>
                         <select id="crear-dificultad" name="dificultad"
                                 class="form-select bg-dark text-white border-secondary" required>
@@ -381,20 +373,14 @@ if (isset($_GET['data'])) {
     document.getElementById('introducir-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const username = document.getElementById('introducir-usuario').value.trim();
-        const password = document.getElementById('introducir-password').value;
 
         if (!username) {
             setStatus('Introduce un usuario válido.', true);
             return;
         }
 
-        if (!password) {
-            setStatus('Introduce una contraseña válida.', true);
-            return;
-        }
-
         try {
-            await postBackend({action: 'save_name', nombre: username, password});
+            await postBackend({action: 'save_name', nombre: username});
             setStatus('cookie wena :)');
             window.location.reload();
         } catch (error) {
@@ -405,16 +391,10 @@ if (isset($_GET['data'])) {
     document.getElementById('crear-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const username = document.getElementById('crear-usuario').value.trim();
-        const password = document.getElementById('crear-password').value;
         const dificultadId = Number.parseInt(document.getElementById('crear-dificultad').value, 10);
 
         if (!username) {
             setStatus('Introduce un usuario válido.', true);
-            return;
-        }
-
-        if (!password) {
-            setStatus('Introduce una contraseña válida.', true);
             return;
         }
 
@@ -428,10 +408,9 @@ if (isset($_GET['data'])) {
                 action: 'crear_equipo',
                 nombre: username,
                 dificultad_id: dificultadId,
-                password,
             });
 
-            await postBackend({action: 'save_name', nombre: username, password});
+            await postBackend({action: 'save_name', nombre: username});
             setStatus('usuario y cookie wenos :)');
             window.location.reload();
         } catch (error) {

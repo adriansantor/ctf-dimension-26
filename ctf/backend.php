@@ -42,8 +42,6 @@ function isHttpsRequest(): bool
 
 final class CtfBackend
 {
-    private const RESERVED_COLUMNS = ['nombre_b64', 'password_hash', 'dif', 'puntos'];
-
     private string $csvPath;
     private string $flagsPath;
     private string $respuestasPath;
@@ -80,22 +78,12 @@ final class CtfBackend
         return $this->comprobarNombreExiste($nombre);
     }
 
-    public function saveName(string $nombre, string $password): void
+    public function saveName(string $nombre): void
     {
         $nombreB64 = $this->encodeName($nombre);
 
-        if ($password === '') {
-            throw new InvalidArgumentException('Falta contraseña.');
-        }
-
         if (!$this->comprobarNombreExiste($nombreB64)) {
             throw new RuntimeException('El usuario/equipo no existe.');
-        }
-
-        $row = $this->findRowByNameB64($nombreB64);
-        $passwordHash = (string) ($row['password_hash'] ?? '');
-        if ($passwordHash === '' || !password_verify($password, $passwordHash)) {
-            throw new RuntimeException('Contraseña incorrecta.');
         }
 
         $this->setUsuarioCookieValue($nombreB64);
@@ -155,32 +143,21 @@ final class CtfBackend
         return ($row[$reto] ?? '0') === '1';
     }
 
-    public function crearEquipo(string $nombre, int $dificultadId, string $password): void
+    public function crearEquipo(string $nombre, int $dificultadId): void
     {
         $dificultadId = $this->normalizeDificultadId($dificultadId);
         $nombreB64 = $this->encodeName($nombre);
-        $password = trim($password);
-
-        if ($password === '') {
-            throw new InvalidArgumentException('Falta contraseña.');
-        }
 
         if ($this->comprobarNombreExiste($nombreB64)) {
             throw new RuntimeException('El equipo ya existe.');
         }
 
         [$header, $rows] = $this->readAll();
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        if ($passwordHash === false) {
-            throw new RuntimeException('No se pudo generar el hash de la contraseña.');
-        }
 
         $newRow = [];
         foreach ($header as $column) {
             if ($column === 'nombre_b64') {
                 $newRow[$column] = $nombreB64;
-            } elseif ($column === 'password_hash') {
-                $newRow[$column] = $passwordHash;
             } elseif ($column === 'dif') {
                 $newRow[$column] = (string) $dificultadId;
             } elseif ($column === 'puntos') {
@@ -472,7 +449,7 @@ final class CtfBackend
         $this->header = $header;
         $this->challengeColumns = array_values(array_filter(
             $header,
-            static fn (string $column): bool => !in_array($column, self::RESERVED_COLUMNS, true)
+            static fn (string $column): bool => !in_array($column, ['nombre_b64', 'dif', 'puntos'], true)
         ));
     }
 
@@ -638,11 +615,10 @@ try {
 
         case 'save_name':
             $nombre = (string) ($payload['nombre'] ?? '');
-            $password = (string) ($payload['password'] ?? '');
             if ($nombre === '') {
                 throw new InvalidArgumentException('Falta nombre.');
             }
-            $backend->saveName($nombre, $password);
+            $backend->saveName($nombre);
             respond(200, ['ok' => true]);
 
         case 'get_name':
@@ -679,11 +655,10 @@ try {
         case 'crear_equipo':
             $nombre = (string) ($payload['nombre'] ?? '');
             $dificultadId = (int) ($payload['dificultad_id'] ?? 0);
-            $password = (string) ($payload['password'] ?? '');
             if ($nombre === '') {
                 throw new InvalidArgumentException('Falta nombre.');
             }
-            $backend->crearEquipo($nombre, $dificultadId, $password);
+            $backend->crearEquipo($nombre, $dificultadId);
             respond(200, ['ok' => true]);
 
         case 'anadir_a_equipo':

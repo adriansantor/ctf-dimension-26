@@ -20,18 +20,18 @@ $graphImageUrl = $scriptDir . '/grafo.jpeg';
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/style.css"/>
-	<title>El camino mínimo</title>
+	<title>dijsakjdtra</title>
 </head>
 <body class="body-bg">
 	<main class="container py-4">
 		<div class="row align-center g-4 mb-4">
-			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">El camino mínimo</h1>
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">dijsakjdtra</h1>
 		</div>
 
 		<div class="row justify-content-center g-4">
 			<div class="col-12 col-lg-10">
 				<div class="border border-secondary rounded-3 p-4 h-100 mb-4">
-					<p class="fs-5">Para este reto se te iba a dar la flag directamente como incentivo, pero un malvado estudiante de Lógica y Matemáticas Discretas quiso complicar el reto.</p>
+					<p class="fs-5">Para este reto se te iba a dar la flag directamente como incentivo, pero un malvado estudiante de logica y matematicas discretas quiso complicar el reto.</p>
 					<p>Aqui tienes un grafo con una pequena contraseña. Tienes que encontrar el camino mas corto de la f a la s. ¿Puedes encontrar el mensaje oculto?</p>
 					<img src="<?php echo htmlspecialchars($graphImageUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="Grafo del reto" class="img-fluid border border-secondary rounded-2" />
 				</div>

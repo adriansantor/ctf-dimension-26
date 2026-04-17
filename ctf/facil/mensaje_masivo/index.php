@@ -25,14 +25,14 @@ $csrfToken = getCtfCsrfToken();
 
     <div class="row justify-content-center g-4">
         <div class="col-12 col-lg-10">
-            <div class="border border-secondary rounded-3">
+            <div class="border border-secondary rounded-3 p-4 h-100 mb-4 text-center">
                 <p class="mb-3 fs-5">Hemos recibido el siguiente mensaje. Sospechamos que contiene la flag para este desafio, pero no sabemos cual es.</p>
-                <p class="font-monospace" style="font-family: monospace;white-space: pre-wrap; font-size: 95%; line-height: 1.25;">
-             _   _            _                      _ _                                    _
+                <p class="font-monospace mb-0" style="white-space: pre-wrap; font-size: clamp(0.62rem, 1.15vw, 1.15rem); line-height: 1.25;">
+            _   _            _                      _ _                                    _
             | | | |_ __   ___| |_ ___    __ _    ___(_) |__   ___ _ __    ___ ___  _ __ ___| |
             | | | | '_ \ / _ \ __/ _ \  / _` |  / __| | '_ \ / _ \ '__|  / __/ _ \| '__/ _ \ |
             | |_| | | | |  __/ ||  __/ | (_| | | (__| | |_) |  __/ |    | (_| (_) | | |  __/_|
-             \___/|_| |_|\___|\__\___|  \__,_|  \___|_|_.__/ \___|_|     \___\___/|_|  \___(_)
+            \___/|_| |_|\___|\__\___|  \__,_|  \___|_|_.__/ \___|_|     \___\___/|_|  \___(_)
         </p>
             </div>
         </div>
