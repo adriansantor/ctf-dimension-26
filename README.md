@@ -84,7 +84,7 @@
 - morse [realizado]
     Tienen q pasar un audio morse a texto
     ID=morsa
-- espectro audio
+- espectro audio [realizado]
     Tienen que ver un espectro de audio e interpretarlo para la flag
     ID=fantasma
 
