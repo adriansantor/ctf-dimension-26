@@ -70,7 +70,7 @@
     ID=plain
 
 ##### Medio
-- grep
+- grep [realizado]
     Les damos un archivo lleno de mierda y tienen q grepear la flag
     ID=regex
 - gymkana

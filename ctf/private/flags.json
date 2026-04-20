@@ -20,7 +20,7 @@
   "sqli_medio": {"dificultad_id": 2, "flag": "core{sqli_medio}"},
   "tarjeta_blanca": {"dificultad_id": 2, "flag": "core{tarjeta_blanca}"},
   "actually": {"dificultad_id": 2, "flag": "core{actually}"},
-  "regex": {"dificultad_id": 2, "flag": "core{regex}"},
+  "regex": {"dificultad_id": 2, "flag": "core{borren_tso}"},
   "exploracion": {"dificultad_id": 2, "flag": "core{exploracion}"},
   "alta_torre": {"dificultad_id": 2, "flag": "core{alta_torre}"},
   "varita": {"dificultad_id": 2, "flag": "core{varita}"},
