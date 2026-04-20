@@ -5,7 +5,7 @@
   "historia_importante": {"dificultad_id": 1, "flag": "core{historia_importante}"},
   "mensaje_masivo": {"dificultad_id": 1, "flag": "core{mensaje_masivo}"},
   "tu_madre_es_tan_gorda": {"dificultad_id": 1, "flag": "core{tu_madre_es_tan_gorda}"},
-  "torre_de_babel": {"dificultad_id": 1, "flag": "core{torre_de_babel}"},
+  "torre_de_babel": {"dificultad_id": 1, "flag": "core{dondeestalapuerta}"},
   "plain": {"dificultad_id": 1, "flag": "core{areufr}"},
   "epstein_files": {"dificultad_id": 1, "flag": "core{estudia_los_mandamientos}"},
   "pajarito": {"dificultad_id": 1, "flag": "core{haterdobbylocooooo}"},
