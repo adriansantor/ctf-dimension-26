@@ -36,7 +36,7 @@ $csrfToken = getCtfCsrfToken();
 						<li>Condicion 3: la linea debe terminar exactamente en 42.</li>
 						<li>Condicion 4: de esa linea, extrae solo la palabra en minusculas y guion bajo que queda entre asdasd y asdasd 42.</li>
 					</ul>
-					<a href="./ruido_regex.txt" download class="btn btn-outline-light">Descargar ruido_regex.txt</a>
+					<a href="/medio/regex/ruido_regex.txt" download class="btn btn-outline-light">Descargar ruido_regex.txt</a>
 				</div>
 			</div>
 		</div>
