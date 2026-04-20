@@ -61,7 +61,7 @@
 - tu madre es tan gorda
     Tienen que descargar 2 zips, que entre los 2 contendrán la flag
     ID=tu_madre_es_tan_gorda
-- b64 encode
+- b64 encode [realizado]
     Tienen que encodear un mensaje en b64 para que les demos la flag
     ID=torre_de_babel
 - html [realizado]
@@ -92,7 +92,7 @@
 - Lockpicking [realizado]
     Tienen que abrir un cerrojo
     ID=lockpicking
-- Bruteforce login
+- Bruteforce login [realizado]
     Tienen que bruteforcear un login
     ID=fuerte_ataque
 - Descompilar el binario [realizado]
