@@ -71,7 +71,7 @@ $csrfToken = getCtfCsrfToken();
 					<h2 class="h3 fw-bold mb-3">Panel de edicion de notas</h2>
 					<form id="flag-form" class="d-flex flex-column gap-2">
 						<label for="flag-input" class="form-label mb-0">Introduce codigo ultrasecreto para acceder</label>
-						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" placeholder="core{...}" required autocomplete="off" />
 						<button type="submit" class="btn btn-outline-light mt-2">Acceder</button>
 					</form>
 				</section>

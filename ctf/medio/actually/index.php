@@ -58,7 +58,7 @@ $csrfToken = getCtfCsrfToken();
 
 					<form id="flag-form" class="d-flex flex-column gap-2">
 						<label for="flag-input" class="form-label mb-0">Flag</label>
-						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off"/>
+						<input id="flag-input" name="flag" type="text" class="form-control bg-dark text-white border-secondary" placeholder="core{...}" required autocomplete="off"/>
 						<button type="submit" class="btn btn-outline-light mt-2">Enviar flag real</button>
 					</form>
 				</section>

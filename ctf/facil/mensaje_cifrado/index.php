@@ -61,7 +61,7 @@ $csrfToken = getCtfCsrfToken();
                         name="flag"
                         type="text"
                         class="form-control bg-dark text-white border-secondary"
-                        required
+                        placeholder="core{...}" required
                         autocomplete="off"
                     />
                     <button type="submit" class="btn btn-outline-light mt-2">Comprobar flag</button>
