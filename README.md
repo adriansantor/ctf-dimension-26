@@ -90,7 +90,7 @@
     ID=fantasma
 
 ##### Difícil
-- Lockpicking
+- Lockpicking [realizado]
     Tienen que abrir un cerrojo
     ID=lockpicking
 - Bruteforce login
