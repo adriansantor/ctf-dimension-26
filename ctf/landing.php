@@ -255,7 +255,6 @@ if (isset($_GET['data'])) {
             <div class="row mb-4 gy-4">
                 <div class="border border-secondary rounded-3 p-4 h-100">
                     <h2 class="fw-bold mb-2">Introducir usuario</h2>
-                    <p class="text-muted mb-3">Inicia sesión y asigna cookie <code>usuario_b64</code></p>
                     <form id="introducir-form" class="d-flex flex-column gap-2">
                         <label for="introducir-usuario" class="form-label mb-0">Usuario</label>
                         <input id="introducir-usuario" name="usuario" type="text"
@@ -273,7 +272,6 @@ if (isset($_GET['data'])) {
             <div class="row mb-4 ">
                 <div class="border border-secondary rounded-3 p-4 h-100">
                     <h2 class="fw-bold mb-2">Crear usuario</h2>
-                    <p class="text-muted mb-3">Inicializa fila en <code>retos.csv</code></p>
                     <form id="crear-form" class="d-flex flex-column gap-2">
                         <label for="crear-usuario" class="form-label mb-0">Usuario</label>
                         <input id="crear-usuario" name="usuario" type="text"
@@ -299,7 +297,6 @@ if (isset($_GET['data'])) {
                 <div class="border border-secondary rounded-3 p-4 h-100">
                     <?php if ($tieneUsuario): ?>
                         <h2 class="fw-bold mb-2">Menú de retos</h2>
-                        <p class="text-muted mb-3">Solo visible con cookie activa</p>
                         <div class="retos-grid">
                             <?php foreach ($retosPorDificultad as $dificultad => $config): ?>
                                 <div>
