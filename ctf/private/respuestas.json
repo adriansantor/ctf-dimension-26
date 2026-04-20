@@ -44,8 +44,8 @@
     "respuesta": "PLACEHOLDER"
   },
   {
-    "id_reto": "rootoor",
-    "respuesta": "PLACEHOLDER"
+    "id_reto": "update_urgently",
+    "respuesta": "toor"
   },
   {
     "id_reto": "comentarios_discretos",
@@ -57,7 +57,7 @@
   },
   {
     "id_reto": "cvque",
-    "respuesta": "PLACEHOLDER"
+    "respuesta": "CVE-2014-0160"
   },
   {
     "id_reto": "serpiente",
