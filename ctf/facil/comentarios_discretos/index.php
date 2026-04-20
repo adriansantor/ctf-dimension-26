@@ -28,7 +28,7 @@ $csrfToken = getCtfCsrfToken();
 				<div class="border border-secondary rounded-3 p-4 h-100">
 					<h2 class="h3 fw-bold mb-3">¿Quién es el profesor MÁS satisfactorio?</h2>
 					<form id="respuesta-form" class="d-flex flex-column gap-2">
-						<label for="respuesta-input" class="form-label mb-0">Para esta flag hallar, a un SATISFACTORIO profe deberás avistar. En los comentarios de uno de sus vídeos deberás entrar y el querido hater la flag te dará. Pista: @logicaymatematicadiscreta3538</label>
+						<label for="respuesta-input" class="form-label mb-0">Para esta flag hallar, a un SATISFACTORIO profe deberás avistar. En los comentarios de uno de sus vídeos deberás entrar y el querido hater la flag te dará. Pista: Mira los vídeos de combinatoria de @logicaymatematicadiscreta3538</label>
 						<input id="respuesta-input" name="respuesta" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
 						<button type="submit" class="btn btn-outline-light mt-2">Comprobar respuesta</button>
 					</form>
