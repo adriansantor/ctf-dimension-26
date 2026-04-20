@@ -241,9 +241,9 @@ $mostrarFlag = ($info === 'aura');
                 <p class="text-muted small mb-3">Cuando hayas obtenido la flag, introdúcela aquí para sumar los puntos.</p>
                 <form id="flag-form" class="d-flex flex-column gap-2">
                     <label for="flag-input" class="form-label mb-0">Flag</label>
-                    <input id="flag-input" name="flag" type="text"
-                           class="form-control bg-dark text-white border-secondary"
-                           required autocomplete="off" placeholder="core{...}" />
+                          <input id="flag-input" name="flag" type="text"
+                              class="form-control bg-dark text-white border-secondary"
+                              placeholder="core{...}" required autocomplete="off" />
                     <button type="submit" class="btn btn-outline-light mt-2">Enviar flag</button>
                 </form>
             </div>

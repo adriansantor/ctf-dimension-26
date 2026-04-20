@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
-$challengeId = 'juego_imposible';
+$challengeId = 'fuerte_ataque';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 ?>
@@ -15,21 +15,21 @@ $csrfToken = getCtfCsrfToken();
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/style.css"/>
-	<title>Template Reto CTF</title>
+	<title>Reto CTF: Fuerte Ataque</title>
 </head>
 <body class="body-bg">
 	<main class="container py-4">
 		<div class="row align-center g-4 mb-4">
-			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Template reto CTF</h1>
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Reto Fuerte Ataque</h1>
 		</div>
 
-		<div class="row justify-content-center g-4">
-			<div class="col-12 col-lg-10">
-				<div class="border border-secondary rounded-3 p-4 h-100 mb-4 text-center">
-					<p class="mb-3 fs-5"Hemos conseguido sacar este binario de generación de claves de un sistema de máxima seguridad del CNI. Tenemos que ver como encontrar el número generado para resolver el acertijo. Buena suerte.</p>
-					<h2 class="h3 fw-bold mb-3">Ejecuta nuestro binario</h2>
-					<p>Haz clic abajo para bajar el binario directamente a tu carpeta de descargas.</p>
-					<a href="/dificil/juego_imposible/main" download="main" class="btn btn-outline-light">Descargar Binario</a>
+		<div class="row justify-content-center mb-4">
+			<div class="col-12 col-lg-8">
+				<div class="border border-secondary rounded-3 p-4">
+					<h2 class="h3 fw-bold mb-3">Objetivo</h2>
+					<p class="mb-2">El panel de admin solo acepta un login con usuario <code>admin</code>.</p>
+					<p class="mb-2">Se han olvidado la contrasena, te toca bruteforcearla.</p>
+					<p class="mb-0">PD: estará en rockyou :P</p>
 				</div>
 			</div>
 		</div>
@@ -37,11 +37,13 @@ $csrfToken = getCtfCsrfToken();
 		<div class="row g-4 justify-content-center">
 			<div class="col-12 col-lg-5">
 				<div class="border border-secondary rounded-3 p-4 h-100">
-					<h2 class="h3 fw-bold mb-3">Responder pregunta</h2>
-					<form id="respuesta-form" class="d-flex flex-column gap-2">
-						<label for="respuesta-input" class="form-label mb-0">Pregunta</label>
-						<input id="respuesta-input" name="respuesta" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
-						<button type="submit" class="btn btn-outline-light mt-2">Comprobar respuesta</button>
+					<h2 class="h3 fw-bold mb-3">Login del servidor</h2>
+					<form id="login-form" class="d-flex flex-column gap-2">
+						<label for="username-input" class="form-label mb-0">Usuario</label>
+						<input id="username-input" name="username" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<label for="password-input" class="form-label mb-0 mt-1">Contraseña</label>
+						<input id="password-input" name="password" type="password" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
+						<button type="submit" class="btn btn-outline-light mt-2">Iniciar sesion</button>
 					</form>
 				</div>
 			</div>
@@ -124,14 +126,21 @@ $csrfToken = getCtfCsrfToken();
 			status.style.color = isError ? '#b00020' : '#0a6b0a';
 		}
 
-		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
+		document.getElementById('login-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
 
-			const input = document.getElementById('respuesta-input');
-			const respuestaValue = input.value.trim();
+			const usernameInput = document.getElementById('username-input');
+			const passwordInput = document.getElementById('password-input');
+			const usernameValue = usernameInput.value.trim();
+			const passwordValue = passwordInput.value.trim();
 
-			if (!respuestaValue) {
-				setStatus('Introduce una respuesta.', true);
+			if (!usernameValue || !passwordValue) {
+				setStatus('Introduce usuario y contraseña.', true);
+				return;
+			}
+
+			if (usernameValue !== 'admin') {
+				setStatus('Credenciales incorrectas', true);
 				return;
 			}
 
@@ -143,16 +152,16 @@ $csrfToken = getCtfCsrfToken();
 			}
 
 			try {
-				const result = await comprobarRespuesta(respuestaValue);
+				const result = await comprobarRespuesta(passwordValue);
 				if (result.correcta) {
 					const flagResult = await getFlag();
-					setStatus('Flag: ' + flagResult.flag);
+					setStatus('Login correcto. Flag: ' + flagResult.flag);
 					return;
 				}
 
-				setStatus('Respuesta incorrecta', true);
+				setStatus('Credenciales incorrectas', true);
 			} catch (error) {
-				setStatus('Respuesta incorrecta', true);
+				setStatus('Credenciales incorrectas', true);
 			}
 		});
 
@@ -189,4 +198,3 @@ $csrfToken = getCtfCsrfToken();
 	</script>
 </body>
 </html>
-
