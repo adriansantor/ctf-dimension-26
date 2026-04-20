@@ -121,9 +121,9 @@
 - laberinto [realizado*]
     Tienen que encontrar la flag en unas carpetas
     ID=epstein_files
-- creds default
+- creds default [realizado]
     Tienen que adivinar las credenciales por defecto de un login
-    ID=rootoor
+    ID=update_urgently
 - comentarios discretos
     Tienen que ir al video del profe de discretas a buscar la flag en un comentario
     ID=comentarios_discretos
