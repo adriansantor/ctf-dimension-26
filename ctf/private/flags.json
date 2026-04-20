@@ -13,7 +13,7 @@
   "rootoor": {"dificultad_id": 1, "flag": "core{rootoor}"},
   "comentarios_discretos": {"dificultad_id": 1, "flag": "core{comentarios_discretos}"},
   "mucho_texto": {"dificultad_id": 1, "flag": "core{mucho_texto}"},
-  "cvque": {"dificultad_id": 1, "flag": "core{cvque}"},
+  "cvque": {"dificultad_id": 1, "flag": "core{he4rtbl33d}"},
 
   "serpiente": {"dificultad_id": 2, "flag": "core{serpiente}"},
   "mundo_misterioso": {"dificultad_id": 2, "flag": "core{mundo_misterioso}"},

@@ -18,8 +18,6 @@
 - cesar decode [realizado]
     Les damos un texto con cifrado cesar y lo tienen que descifrar
     ID= mensaje_cifrado
-- zip bomb
-
 - rsa
     Les damos una clave pública y una clave privada y les hacemos encodear un mensaje con rsa.
     ID= claves_confusas
@@ -32,10 +30,6 @@
 - .py
     Tienen que leer un archivo python para encontrar la flag
     ID= serpiente
-- minecraft
-    Tienen que meterse a un servidor de minecraft, e ir a unas coordenadas para encontrar la flag
-    ID= mundo_misterioso
-- SQLi (medio)
 - NFC
     Tienen que leer una tarjeta nfc que tendrá la flag
     ID= tarjeta_blanca
@@ -82,7 +76,7 @@
 - gymkana
     Les ponemos a buscar cosas por la uni
     ID=exploracion
-- papel CIC
+- papel CIC [realizado]
     Tienen que subir arriba del CIC a mirar un papel
     ID=alta_torre
 - harry potter
@@ -102,12 +96,9 @@
 - Bruteforce login
     Tienen que bruteforcear un login
     ID=fuerte_ataque
-- Descompilar el binario
+- Descompilar el binario [realizado]
     Tienen que descompilar un binario para ver instrucciones para que el binario les devuelva la flag
     ID=juego_imposible
-- CSRF
-    Tienen que cambiar una cosa en la url para ver la flag
-    ID=parametro_extraño
 
 ### david
 
@@ -139,7 +130,7 @@
 - hex --> ascii
     Tienen que pasar texto en hexadecimal a ascii para la flag
     ID=mucho_texto
-- código cve
+- código cve [realizado]
     Tienen que buscar el código cve de una vulnerabilidad que les describas
     ID=cvque
 
@@ -153,9 +144,6 @@
 - multisim [realizado]
     Les damos un circuito combinacional con un multiplexor de 32 entradas, y tienen que escribir la entrada necesaria para una salida específica
     ID=odio_multisim
-- parcial fundamentos de seguridad
-    Tienen que resolver algunas preguntas de un parcial de FS
-    ID=metelo_en_arroz
 
 ##### Difícil
 - wireshark [realizado]
