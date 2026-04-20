@@ -43,7 +43,7 @@
 - hash (john) [realizado]
     Tienen que romper un hash con john
     ID= sopadeletras
-- GET con cabecera
+- GET con cabecera [realizado]
     Tienen que hacer una petición GET con un header específico que les devuelva la flag
     ID= cabezon
 

@@ -34,7 +34,7 @@
   "telescopio": {"dificultad_id": 3, "flag": "core{telescopio}"},
   "sqli_dificil": {"dificultad_id": 3, "flag": "core{sqli_dificil}"},
   "sopadeletras": {"dificultad_id": 3, "flag": "core{sopadeletras}"},
-  "cabezon": {"dificultad_id": 3, "flag": "core{cabezon}"},
+  "cabezon": {"dificultad_id": 3, "flag": "core{buena_cabeza}"},
   "lockpicking": {"dificultad_id": 3, "flag": "core{gitano_prime}"},
   "fuerte_ataque": {"dificultad_id": 3, "flag": "core{fuerte_ataque}"},
   "juego_imposible": {"dificultad_id": 3, "flag": "core{juego_imposible}"},

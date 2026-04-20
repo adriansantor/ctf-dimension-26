@@ -16,7 +16,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET' && (($_GET['oraculo'] ?? '')
 		exit;
 	}
 
-	echo json_encode(['ok' => true, 'flag' => 'core{cabezon}']);
+	echo json_encode(['ok' => true, 'flag' => 'core{buena_cabeza}']);
 	exit;
 }
 ?>
