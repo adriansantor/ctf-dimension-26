@@ -126,7 +126,7 @@
 - comentarios discretos
     Tienen que ir al video del profe de discretas a buscar la flag en un comentario
     ID=comentarios_discretos
-- hex --> ascii
+- hex --> ascii [realizado]
     Tienen que pasar texto en hexadecimal a ascii para la flag
     ID=mucho_texto
 - código cve [realizado]
