@@ -1,6 +1,6 @@
 {
   "mensaje_cifrado": {"dificultad_id": 1, "flag": "core{miguel_twink}"},
-  "claves_confusas": {"dificultad_id": 1, "flag": "core{claves_confusas}"},
+  "claves_confusas": {"dificultad_id": 1, "flag": "core{todos_aprobados}"},
   "historia_importante": {"dificultad_id": 1, "flag": "core{gusanin}"},
   "mensaje_masivo": {"dificultad_id": 1, "flag": "core{unetebro}"},
   "tu_madre_es_tan_gorda": {"dificultad_id": 1, "flag": "core{que_necesita_dos_retos}"},
