@@ -27,7 +27,7 @@
     ID= mensaje_masivo
 
 ##### Medio
-- .py
+- .py [realizado]
     Tienen que leer un archivo python para encontrar la flag
     ID= serpiente
 - NFC

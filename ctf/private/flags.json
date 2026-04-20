@@ -15,7 +15,7 @@
   "mucho_texto": {"dificultad_id": 1, "flag": "core{demasiado_texto}"},
   "cvque": {"dificultad_id": 1, "flag": "core{he4rtbl33d}"},
 
-  "serpiente": {"dificultad_id": 2, "flag": "core{serpiente}"},
+  "serpiente": {"dificultad_id": 2, "flag": "core{ewwpython}"},
   "mundo_misterioso": {"dificultad_id": 2, "flag": "core{mundo_misterioso}"},
   "sqli_medio": {"dificultad_id": 2, "flag": "core{sqli_medio}"},
   "tarjeta_blanca": {"dificultad_id": 2, "flag": "core{tarjeta_blanca}"},
