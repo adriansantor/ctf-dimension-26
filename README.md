@@ -40,7 +40,6 @@
 - JWT [realizado]
     Tienen que extraer la flag de un JWT
     ID= telescopio
-- SQLi (dificil)
 - hash (john) [realizado]
     Tienen que romper un hash con john
     ID= sopadeletras
@@ -65,7 +64,7 @@
 - b64 encode
     Tienen que encodear un mensaje en b64 para que les demos la flag
     ID=torre_de_babel
-- html
+- html [realizado]
     Tienen que leer el código de la página para ver la flag
     ID=plain
 
