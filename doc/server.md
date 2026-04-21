@@ -21,7 +21,7 @@ server {
   listen 80;
   server_name 192.168.1.100;
 
-  root /var/www/ctf-dimension-26/ctf;
+  root /var/www/ctf;
   index index.html index.htm index.php;
 
   location = /retos.csv {
