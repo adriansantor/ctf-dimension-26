@@ -78,13 +78,6 @@ $csrfToken = getCtfCsrfToken();
 			await postBackend({ action: 'get_puntos' });
 		}
 
-		async function comprobarRespuesta(respuestaValue) {
-			return postBackend({
-				action: 'comprobar_respuesta',
-				id: CHALLENGE_ID,
-				respuesta: respuestaValue,
-			});
-		}
 
 		async function getFlag() {
 			return postBackend({
@@ -106,38 +99,6 @@ $csrfToken = getCtfCsrfToken();
 			status.textContent = message;
 			status.style.color = isError ? '#b00020' : '#0a6b0a';
 		}
-
-		document.getElementById('respuesta-form').addEventListener('submit', async (event) => {
-			event.preventDefault();
-
-			const input = document.getElementById('respuesta-input');
-			const respuestaValue = input.value.trim();
-
-			if (!respuestaValue) {
-				setStatus('Introduce una respuesta.', true);
-				return;
-			}
-
-			try {
-				await validarCookieUsuario();
-			} catch (error) {
-				setStatus('cookien\'t', true);
-				return;
-			}
-
-			try {
-				const result = await comprobarRespuesta(respuestaValue);
-				if (result.correcta) {
-					const flagResult = await getFlag();
-					setStatus('Flag: ' + flagResult.flag);
-					return;
-				}
-
-				setStatus('Respuesta incorrecta', true);
-			} catch (error) {
-				setStatus('Respuesta incorrecta', true);
-			}
-		});
 
 		document.getElementById('flag-form').addEventListener('submit', async (event) => {
 			event.preventDefault();

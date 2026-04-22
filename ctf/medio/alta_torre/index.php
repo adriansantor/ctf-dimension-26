@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
-$challengeId = 'ID_RETO';
+$challengeId = 'alta_torre';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 ?>
@@ -15,7 +15,7 @@ $csrfToken = getCtfCsrfToken();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css"/>
-    <title>Template Reto CTF</title>
+    <title>Alta Torre</title>
 </head>
 <body class="body-bg">
     <main class="container py-4">
