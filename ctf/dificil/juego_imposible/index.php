@@ -15,18 +15,18 @@ $csrfToken = getCtfCsrfToken();
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/style.css"/>
-	<title>Template Reto CTF</title>
+	<title>Reto: Juego Imposible</title>
 </head>
 <body class="body-bg">
 	<main class="container py-4">
 		<div class="row align-center g-4 mb-4">
-			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Template reto CTF</h1>
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Reto: Juego Imposible</h1>
 		</div>
 
 		<div class="row justify-content-center g-4">
 			<div class="col-12 col-lg-10">
 				<div class="border border-secondary rounded-3 p-4 h-100 mb-4 text-center">
-					<p class="mb-3 fs-5"Hemos conseguido sacar este binario de generación de claves de un sistema de máxima seguridad del CNI. Tenemos que ver como encontrar el número generado para resolver el acertijo. Buena suerte.</p>
+					<p class="mb-3 fs-5">Hemos conseguido sacar este binario de generación de claves de un sistema de máxima seguridad del CNI. Tenemos que ver como encontrar el número generado para resolver el acertijo. Buena suerte.</p>
 					<h2 class="h3 fw-bold mb-3">Ejecuta nuestro binario</h2>
 					<p>Haz clic abajo para bajar el binario directamente a tu carpeta de descargas.</p>
 					<a href="/dificil/juego_imposible/main" download="main" class="btn btn-outline-light">Descargar Binario</a>

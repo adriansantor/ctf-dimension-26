@@ -20,7 +20,7 @@ $csrfToken = getCtfCsrfToken();
 <body class="body-bg">
     <main class="container py-4">
         <div class="row align-center g-4 mb-4">
-            <h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Template reto CTF</h1>
+            <h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Reto: Alta Torre</h1>
         </div>
 
 		<div class="row justify-content-center g-4">
