@@ -3,7 +3,7 @@
   "claves_confusas": {"dificultad_id": 1, "flag": "core{claves_confusas}"},
   "historia_importante": {"dificultad_id": 1, "flag": "core{gusanin}"},
   "mensaje_masivo": {"dificultad_id": 1, "flag": "core{unetebro}"},
-  "tu_madre_es_tan_gorda": {"dificultad_id": 1, "flag": "core{que_necesita_dos_retos}"},
+  "tu_madre_es_tan_gorda": {"dificultad_id": 1, "flag": "core{tu_madre_esta_tan_gorda_que_ocupa_25_zips}"},
   "torre_de_babel": {"dificultad_id": 1, "flag": "core{dondeestalapuerta}"},
   "plain": {"dificultad_id": 1, "flag": "core{areufr}"},
   "epstein_files": {"dificultad_id": 1, "flag": "core{estudia_los_mandamientos}"},
