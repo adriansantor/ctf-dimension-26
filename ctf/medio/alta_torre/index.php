@@ -26,7 +26,7 @@ $csrfToken = getCtfCsrfToken();
 		<div class="row justify-content-center g-4">
 			<div class="col-12 col-lg-10">
 				<div class="border border-secondary rounded-3 p-4 h-100 mb-4 text-center">
-					<p class="mb-3 fs-5">En lo mas alto de la mas alta torre de esta inóspita universidad, los magos del departamento de informática han dejado una clave secreta de magia negra. Encuentrala y hazte con su poder.</p>
+					<p class="mb-3 fs-5">En lo mas alto de la mas alta torre de esta inhóspita universidad, los magos del departamento de informática han dejado una clave secreta de magia negra. Encuentrala y hazte con su poder.</p>
 				</div>
 			</div>
 		</div>

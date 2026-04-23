@@ -16,7 +16,7 @@
 
   "serpiente": {"dificultad_id": 2, "flag": "core{ewwpython}"},
   "mundo_misterioso": {"dificultad_id": 2, "flag": "core{mundo_misterioso}"},
-  "tarjeta_blanca": {"dificultad_id": 2, "flag": "core{tarjeta_blanca}"},
+  "tarjeta_blanca": {"dificultad_id": 2, "flag": "core{flippytheflip}"},
   "actually": {"dificultad_id": 2, "flag": "core{gatete}"},
   "regex": {"dificultad_id": 2, "flag": "core{borren_tso}"},
   "exploracion": {"dificultad_id": 2, "flag": "core{exploracion}"},
