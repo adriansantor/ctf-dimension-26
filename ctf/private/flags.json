@@ -33,7 +33,7 @@
   "cabezon": {"dificultad_id": 3, "flag": "core{buena_cabeza}"},
   "lockpicking": {"dificultad_id": 3, "flag": "core{gitano_prime}"},
   "fuerte_ataque": {"dificultad_id": 3, "flag": "core{ilysm}"},
-  "juego_imposible": {"dificultad_id": 3, "flag": "core{juego_imposible}"},
+  "juego_imposible": {"dificultad_id": 3, "flag": "core{B1N4R10}"},
   "tiburon_en_el_agua": {"dificultad_id": 3, "flag": "core{w1r3sh4rk}"},
   "xss": {"dificultad_id": 3, "flag": "core{aura_secreta}"},
   "hardickstra": {"dificultad_id": 3, "flag": "core{relleno_relleno_relleno}"}
