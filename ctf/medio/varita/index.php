@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../csrf.php';
 
-$challengeId = 'ID_RETO';
+$challengeId = 'varita';
 $backendUrl = '/backend.php';
 $csrfToken = getCtfCsrfToken();
 ?>
@@ -15,22 +15,22 @@ $csrfToken = getCtfCsrfToken();
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/style.css"/>
-	<title>Template Reto CTF</title>
+	<title>Reto CTF: varita</title>
 </head>
 <body class="body-bg">
 	<main class="container py-4">
 		<div class="row align-center g-4 mb-4">
-			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Template reto CTF</h1>
+			<h1 class="text-center" style="font-family: 'VT323', monospace; font-size: 6rem;">Reto Varita</h1>
 		</div>
 
 		<div class="row g-4 justify-content-center">
 			<div class="col-12 col-lg-5">
 				<div class="border border-secondary rounded-3 p-4 h-100">
-					<h2 class="h3 fw-bold mb-3">Responder pregunta</h2>
+					<h2 class="h3 fw-bold mb-3">Pista</h2>
 					<form id="respuesta-form" class="d-flex flex-column gap-2">
 						<label for="respuesta-input" class="form-label mb-0">Pregunta</label>
-						<input id="respuesta-input" name="respuesta" type="text" class="form-control bg-dark text-white border-secondary" required autocomplete="off" />
-						<button type="submit" class="btn btn-outline-light mt-2">Comprobar respuesta</button>
+						<p class="mb-2">Un lechuzo ha dejado por Core un pendrive con un libro un poco sospechoso. Si lo miras con cuidado a lo mejor encuentras algo que te ayude en este reto.</p>
+					<a href="/medio/varita/Completely-Normal-Book.pdf" download class="btn btn-outline-light">Descargar Completely-Normal-Book.pdf</a>
 					</form>
 				</div>
 			</div>
