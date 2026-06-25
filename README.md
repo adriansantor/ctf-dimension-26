@@ -1,163 +1,113 @@
 # CTF Dimension 26
 
-## Equipos
+Este proyecto fue creado como actividad para Dimension 2026 - ETSISI/UPM.
 
-### mozos
+## Retos
 
-#### Miembros
-- diego2
-- jose
-- lara
-- dani
-- hiba
-- gunji
-
-#### Retos
-
-##### Fácil
-- cesar decode [realizado]
-    Les damos un texto con cifrado cesar y lo tienen que descifrar
-    ID= mensaje_cifrado
+### Fácil
+- cesar decode
+  - Descripción: Les damos un texto con cifrado cesar y lo tienen que descifrar
+  - ID: mensaje_cifrado
 - rsa
-    Les damos una clave pública y una clave privada y les hacemos encodear un mensaje con rsa.
-    ID= claves_confusas
-- buscar primer ataque masivo en internet [realizado]
-    ID= historia_importante
-- ASCII ampliar [realizado]
-    ID= mensaje_masivo
-
-##### Medio
-- .py [realizado]
-    Tienen que leer un archivo python para encontrar la flag
-    ID= serpiente
-- NFC
-    Tienen que leer una tarjeta nfc que tendrá la flag
-    ID= tarjeta_blanca
-- metadata foto [realizado]
-    Tienen que descargar la foto y leer los metadatos para la flag
-    ID= actually
-##### Difícil
-- JWT [realizado]
-    Tienen que extraer la flag de un JWT
-    ID= telescopio
-- hash (john) [realizado]
-    Tienen que romper un hash con john
-    ID= sopadeletras
-- GET con cabecera [realizado]
-    Tienen que hacer una petición GET con un header específico que les devuelva la flag
-    ID= cabezon
-
-### miguelín
-
-#### Miembros
-- alex
-- kare
-- hernán
-- pedro³
-
-#### Retos
-
-##### Fácil
+  - Descripción: Les damos una clave pública y una clave privada y les hacemos encodear un mensaje con rsa.
+  - ID: claves_confusas
+- buscar primer ataque masivo en internet
+  - ID: historia_importante
+- ASCII ampliar
+  - ID: mensaje_masivo
 - tu madre es tan gorda
-    Tienen que descargar 2 zips, que entre los 2 contendrán la flag
-    ID=tu_madre_es_tan_gorda
-- b64 encode [realizado]
-    Tienen que encodear un mensaje en b64 para que les demos la flag
-    ID=torre_de_babel
-- html [realizado]
-    Tienen que leer el código de la página para ver la flag
-    ID=plain
-
-##### Medio
-- grep [realizado]
-    Les damos un archivo lleno de mierda y tienen q grepear la flag
-    ID=regex
-- gymkana
-    Les ponemos a buscar cosas por la uni
-    ID=exploracion
-- papel CIC [realizado]
-    Tienen que subir arriba del CIC a mirar un papel
-    ID=alta_torre
-- harry potter
-    Tienen que buscar la flag en una página del libro de harry potter
-    ID=varita
-- morse [realizado]
-    Tienen q pasar un audio morse a texto
-    ID=morsa
-- espectro audio [realizado]
-    Tienen que ver un espectro de audio e interpretarlo para la flag
-    ID=fantasma
-
-##### Difícil
-- Lockpicking [realizado]
-    Tienen que abrir un cerrojo
-    ID=lockpicking
-- Bruteforce login [realizado]
-    Tienen que bruteforcear un login
-    ID=fuerte_ataque
-- Descompilar el binario [realizado]
-    Tienen que descompilar un binario para ver instrucciones para que el binario les devuelva la flag
-    ID=juego_imposible
-
-### david
-
-#### Miembros
-- apaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-- sola
-- alejandro clase
-- belén
-- álvaro delegado
-
-#### Retos
-
-##### Fácil
-- twitter [realizado]
-    Tienen que buscar la flag en twitter
-    ID=pajarito
-- hexacolor [realizado]
-    La flag es el código hexa de un color
-    ID=colorido
-- laberinto [realizado*]
-    Tienen que encontrar la flag en unas carpetas
-    ID=epstein_files
-- creds default [realizado]
-    Tienen que adivinar las credenciales por defecto de un login
-    ID=update_urgently
+  - Descripción: Tienen que descargar 2 zips, que entre los 2 contendrán la flag
+  - ID: tu_madre_es_tan_gorda
+- b64 encode
+  - Descripción: Tienen que encodear un mensaje en b64 para que les demos la flag
+  - ID: torre_de_babel
+- html
+  - Descripción: Tienen que leer el código de la página para ver la flag
+  - ID: plain
+- twitter
+  - Descripción: Tienen que buscar la flag en twitter
+  - ID: pajarito
+- hexacolor
+  - Descripción: La flag es el código hexa de un color
+  - ID: colorido
+- laberinto
+  - Descripción: Tienen que encontrar la flag en unas carpetas
+  - ID: epstein_files
+- creds default
+  - Descripción: Tienen que adivinar las credenciales por defecto de un login
+  - ID: update_urgently
 - comentarios discretos
-    Tienen que ir al video del profe de discretas a buscar la flag en un comentario
-    ID=comentarios_discretos
-- hex --> ascii [realizado]
-    Tienen que pasar texto en hexadecimal a ascii para la flag
-    ID=mucho_texto
-- código cve [realizado]
-    Tienen que buscar el código cve de una vulnerabilidad que les describas
-    ID=cvque
+  - Descripción: Tienen que ir al video del profe de discretas a buscar la flag en un comentario
+  - ID: comentarios_discretos
+- hex --> ascii
+  - Descripción: Tienen que pasar texto en hexadecimal a ascii para la flag
+  - ID: mucho_texto
+- código cve
+  - Descripción: Tienen que buscar el código cve de una vulnerabilidad que les describas
+  - ID: cvque
 
-##### Medio
-- dijsakjdtra [realizado]
-    Tienen que hacer dijsktra para encontrar el camino más rápido de un grafo o algo así
-    ID=dijsakjdtra
+### Medio
+- .py
+  - Descripción: Tienen que leer un archivo python para encontrar la flag
+  - ID: serpiente
+- NFC
+  - Descripción: Tienen que leer una tarjeta nfc que tendrá la flag
+  - ID: tarjeta_blanca
+- metadata foto
+  - Descripción: Tienen que descargar la foto y leer los metadatos para la flag
+  - ID: actually
+- grep
+  - Descripción: Les damos un archivo lleno de mierda y tienen q grepear la flag
+  - ID: regex
+- gymkana
+  - Descripción: Les ponemos a buscar cosas por la uni
+  - ID: exploracion
+- papel CIC
+  - Descripción: Tienen que subir arriba del CIC a mirar un papel
+  - ID: alta_torre
+- harry potter
+  - Descripción: Tienen que buscar la flag en una página del libro de harry potter
+  - ID: varita
+- morse
+  - Descripción: Tienen q pasar un audio morse a texto
+  - ID: morsa
+- espectro audio
+  - Descripción: Tienen que ver un espectro de audio e interpretarlo para la flag
+  - ID: fantasma
+- dijsakjdtra
+  - Descripción: Tienen que hacer dijsktra para encontrar el camino más rápido de un grafo o algo así
+  - ID: dijsakjdtra
 - coords gMaps
-    Tienen que hacer algo con unas coordenadas de Maps, o se las dais con el nombre de un sitio o viceversa, y eso es la flag
-    ID=tesoro
-- multisim [realizado]
-    Les damos un circuito combinacional con un multiplexor de 32 entradas, y tienen que escribir la entrada necesaria para una salida específica
-    ID=odio_multisim
+  - Descripción: Tienen que hacer algo con unas coordenadas de Maps, o se las dais con el nombre de un sitio o viceversa, y eso es la flag
+  - ID: tesoro
+- multisim
+  - Descripción: Les damos un circuito combinacional con un multiplexor de 32 entradas, y tienen que escribir la entrada necesaria para una salida específica
+  - ID: odio_multisim
 
-##### Difícil
-- wireshark [realizado]
-    Tienen q extraer la flag de una captura de wireshark
-    ID=tiburon_en_el_agua
-- XSS [realizado]
-    ns muy bien q poner en este la vd
-- grafos vengativos [realizado]
-    encontrar la flag en un grafo de 10000 nodos (tienen que programarlo, no se puede hacer a mano)
-    ID=hardickstra
-
-## Misc.
-
-- cerveza
-- molestarme a mí
-- ganar al mus
-- emilioandres distro
-- besos a miguel
+### Difícil
+- JWT
+  - Descripción: Tienen que extraer la flag de un JWT
+  - ID: telescopio
+- hash (john)
+  - Descripción: Tienen que romper un hash con john
+  - ID: sopadeletras
+- GET con cabecera
+  - Descripción: Tienen que hacer una petición GET con un header específico que les devuelva la flag
+  - ID: cabezon
+- Lockpicking
+  - Descripción: Tienen que abrir un cerrojo
+  - ID: lockpicking
+- Bruteforce login
+  - Descripción: Tienen que bruteforcear un login
+  - ID: fuerte_ataque
+- Descompilar el binario
+  - Descripción: Tienen que descompilar un binario para ver instrucciones para que el binario les devuelva la flag
+  - ID: juego_imposible
+- wireshark
+  - Descripción: Tienen q extraer la flag de una captura de wireshark
+  - ID: tiburon_en_el_agua
+- XSS
+  - Descripción: ns muy bien q poner en este la vd
+- grafos vengativos
+  - Descripción: encontrar la flag en un grafo de 10000 nodos (tienen que programarlo, no se puede hacer a mano)
+  - ID: hardickstra
